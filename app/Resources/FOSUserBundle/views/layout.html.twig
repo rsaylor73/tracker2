@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {% include('header.html.twig') %}
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		{% block fos_user_content %}{% endblock %}
+	</div>
+{% endblock %}
+
+{% block footer %}
+    {% include('footer.html.twig') %}
+{% endblock %}

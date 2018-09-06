@@ -14,6 +14,10 @@ services:
         # if you need to do this, you can override this setting on individual services
         public: false
 
+    Commonservices:
+        class: AppBundle\Service\Commonservices
+        public: true
+
     # makes classes in src/AppBundle available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     AppBundle\:
@@ -28,6 +32,9 @@ services:
         resource: '../../src/AppBundle/Controller'
         public: true
         tags: ['controller.service_arguments']
+
+    app.form.profile:
+        class: App\Form\ProfileFormType
 
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:

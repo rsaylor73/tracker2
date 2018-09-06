@@ -1,11 +1,13 @@
 # To get started with security, check out the documentation:
-# https://symfony.com/doc/current/security.html
+# http://symfony.com/doc/current/book/security.html
 security:
+    encoders:
+        AppBundle\Entity\User: bcrypt
 
-    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory: ~
+        fos_userbundle:
+            id: fos_user.user_provider.username
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -15,10 +17,23 @@ security:
 
         main:
             anonymous: ~
+            logout: ~
+            logout_on_user_change: true
             # activate different ways to authenticate
 
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
+            # http_basic: ~
+            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
 
-            # https://symfony.com/doc/current/security/form_login_setup.html
-            #form_login: ~
+            form_login:
+                csrf_token_generator: security.csrf.token_manager
+
+            remember_me:
+                secret: '%secret%'
+            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+
+    access_control:
+        - { path: ^/(login)$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/, role: ROLE_USER, requires_channel: https }
+

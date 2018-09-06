@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+    {% include('header.html.twig') %}
+{% endblock %}
+
+{% block body %}
+
+<div class="row top-buffer">
+	<div class="col-sm-12">
+		<h2>New User</h2>
+	</div>
+</div>
+{% include('flash-messages.html.twig') %}
+
+    <form action="{{path('saveuser')}}" method="post">
+    <div class="row top-buffer">
+    	<div class="col-sm-3">First Name:</div>
+    	<div class="col-sm-3"><input type="text" name="first" class="form-control"></div>
+    </div>
+    <div class="row top-buffer">
+    	<div class="col-sm-3">Last Name:</div>
+    	<div class="col-sm-3"><input type="text" name="last" class="form-control"></div>
+    </div>
+    <div class="row top-buffer">
+    	<div class="col-sm-3">Email:</div>
+    	<div class="col-sm-3"><input type="text" name="email" required class="form-control"></div>
+    </div>
+    <div class="row top-buffer">
+    	<div class="col-sm-3">User Name:</div>
+    	<div class="col-sm-3"><input type="text" name="uuname" required class="form-control"></div>
+    </div>
+    <div class="row top-buffer">
+    	<div class="col-sm-3">Password:</div>
+    	<div class="col-sm-3"><input type="text" name="password" required class="form-control"></div>
+    </div>
+    <div class="row top-buffer">
+        <div class="col-sm-3">User Type:</div>
+        <div class="col-sm-3">
+            <select name="userType" class="form-control" required>
+                <option>staff</option>
+                <option>client</option>
+            </select>
+        </div>
+    </div>
+    <div class="row top-buffer">
+    	<div class="col-sm-6 alert alert-info"><b>Staff Only</b> : Each group inherits each other. Projects would include Reviews and Reports. Reviews would include Reports, etc. Admin includes all and Reports include only Reports.</div>
+    </div>
+    <div class="row top-buffer">
+    	<div class="col-sm-3">Group Access:</div>
+    	<div class="col-sm-3">
+    		<select name="groupID" class="form-control">
+    			<option value="2">Projects</option>
+    			<option value="3">Reviews</option>
+    			<option value="4">Reports</option>
+    			<option value="1">Admin</option>
+                <option value="5">N/A</option>
+    		</select>
+    	</div>
+    </div>
+    <div class="row top-buffer">
+    	<div class="col-sm-6">
+    		<input type="submit" value="Add" class="btn btn-success">&nbsp;
+    		<input type="button" value="Cancel" class="btn btn-warning" onclick="document.location.href='{{path('users')}}'">
+    	</div>
+    </div>
+    </form>
+
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block footer %}
+    {% include('footer.html.twig') %}
+{% endblock %}

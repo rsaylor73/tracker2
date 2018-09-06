@@ -1,0 +1,41 @@
+{% block page_footer %}
+
+	{# put footer details here #}
+    <!-- Footer -->
+    <footer>
+    <div class="row">
+    <div class="col-lg-12">
+    <p>Copyright &copy; {{ "now"|date("Y") }} BLN</p>
+    </div>
+    </div>
+    </footer>
+
+    </div> <!-- end <div class="container"> -->
+    <!-- /.container -->
+
+    <script>
+    $(function() {
+    $( ".date" ).datepicker({ 
+    dateFormat: "yy-mm-dd",
+    changeMonth: true,
+    changeYear: true,
+    minDate: "-2Y", 
+    maxDate: "+5Y"
+    });
+    });
+
+    $(function() {
+    $( ".date2" ).datepicker({ 
+    dateFormat: "m/d/yy",
+    changeMonth: true,
+    changeYear: true,
+    minDate: "-2Y", 
+    maxDate: "+5Y"
+    });
+    });
+    </script>
+
+    </body>
+
+    </html>
+{% endblock %}

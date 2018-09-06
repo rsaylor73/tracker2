@@ -1,0 +1,174 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {% include('header.html.twig') %}
+{% endblock %}
+
+{% block body %}
+	{% include('flash-messages.html.twig') %}
+    <form action="{{path('tls_update_user')}}" method="POST">
+    <input type="hidden" name="id" value="{{data[0].id}}">
+
+	<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+      <h1 class="display-4">Edit User</h1>
+
+        <div class="row top-buffer">
+            <div class="col-sm-4 text-right">First Name:</div>
+            <div class="col-sm-6">
+                <input type="text" name="first" value="{{data[0].first}}" required class="form-control">
+            </div>
+        </div>
+
+        <div class="row top-buffer">
+            <div class="col-sm-4 text-right">Last Name:</div>
+            <div class="col-sm-6">
+                <input type="text" name="last" value="{{data[0].last}}" required class="form-control">
+            </div>
+        </div>
+
+        <div class="row top-buffer">
+        	<div class="col-sm-4 text-right">Username:</div>
+        	<div class="col-sm-6">
+        		<input type="text" name="username" value="{{data[0].username}}" class="form-control">
+        	</div>
+        </div>
+
+        <div class="row top-buffer">
+        	<div class="col-sm-4 text-right">Password:</div>
+        	<div class="col-sm-6">
+        		<input type="password" name="password" placeholder="Only if you wish to change" class="form-control">
+        	</div>
+        </div>
+
+        <div class="row top-buffer">
+        	<div class="col-sm-4 text-right">Email:</div>
+        	<div class="col-sm-6">
+        		<input type="text" name="email" value="{{data[0].email}}" class="form-control">
+        	</div>
+        </div>
+
+        <div class="row top-buffer">
+        	<div class="col-sm-4 text-right">Enabled</div>
+        	<div class="col-sm-6">
+        		<select name="enabled" class="form-control">
+        			{% if data[0].enabled == "0" %}
+        				<option selected value="false">No</option>
+        				<option value="true">Yes</option>
+        			{% else %}
+        				<option selected value="true">Yes</option>
+        				<option value="false">No</option>
+        			{% endif %}
+        		</select>
+        	</div>
+        </div>
+
+        <div class="row top-buffer">
+            <div class="col-sm-4">&nbsp;</div>
+            <div class="col-sm-6">
+                <div class="alert alert-warning">
+                    <br>Hold <b>Cmd</b> on Mac or <b>Cntr</b> on Win to select multiple fields.
+                </div>
+            </div>
+        </div>
+        <div class="row top-buffer">
+            <div class="col-sm-4 text-right">States (may select multiple)</div>
+            <div class="col-sm-6">
+                <select name="states[]" multiple size="7" required class="form-control">
+
+                    <optgroup label="Available States">
+                        <option {% for key, value in data[0].states %}{% if value == "1" %}selected{% endif %}{% endfor %} value="1">Alabama</option>
+                        <option {% for key, value in data[0].states %}{% if value == "2" %}selected{% endif %}{% endfor %} value="2">Alaska</option>
+                        <option {% for key, value in data[0].states %}{% if value == "3" %}selected{% endif %}{% endfor %} value="3">Arizona</option>
+                        <option {% for key, value in data[0].states %}{% if value == "4" %}selected{% endif %}{% endfor %} value="4">Arkansas</option>
+                        <option {% for key, value in data[0].states %}{% if value == "5" %}selected{% endif %}{% endfor %} value="5">Arkansas</option>
+                        <option {% for key, value in data[0].states %}{% if value == "6" %}selected{% endif %}{% endfor %} value="6">Colorado</option>
+                        <option {% for key, value in data[0].states %}{% if value == "7" %}selected{% endif %}{% endfor %} value="7">Connecticut</option>
+                        <option {% for key, value in data[0].states %}{% if value == "8" %}selected{% endif %}{% endfor %} value="8">Delaware</option>
+                        <option {% for key, value in data[0].states %}{% if value == "9" %}selected{% endif %}{% endfor %} value="9">District of Columbia</option>
+                        <option {% for key, value in data[0].states %}{% if value == "10" %}selected{% endif %}{% endfor %} value="10">Florida</option>
+                        <option {% for key, value in data[0].states %}{% if value == "11" %}selected{% endif %}{% endfor %} value="11">Georgia</option>
+                        <option {% for key, value in data[0].states %}{% if value == "12" %}selected{% endif %}{% endfor %} value="12">Hawaii</option>
+                        <option {% for key, value in data[0].states %}{% if value == "13" %}selected{% endif %}{% endfor %} value="13">Idaho</option>
+                        <option {% for key, value in data[0].states %}{% if value == "14" %}selected{% endif %}{% endfor %} value="14">Illinois</option>
+                        <option {% for key, value in data[0].states %}{% if value == "15" %}selected{% endif %}{% endfor %} value="15">Indiana</option>
+                        <option {% for key, value in data[0].states %}{% if value == "16" %}selected{% endif %}{% endfor %} value="16">Iowa</option>
+                        <option {% for key, value in data[0].states %}{% if value == "17" %}selected{% endif %}{% endfor %} value="17">Kansas</option>
+                        <option {% for key, value in data[0].states %}{% if value == "18" %}selected{% endif %}{% endfor %} value="18">Kentucky</option>
+                        <option {% for key, value in data[0].states %}{% if value == "19" %}selected{% endif %}{% endfor %} value="19">Louisiana</option>
+                        <option {% for key, value in data[0].states %}{% if value == "20" %}selected{% endif %}{% endfor %} value="20">Maine</option>
+                        <option {% for key, value in data[0].states %}{% if value == "21" %}selected{% endif %}{% endfor %} value="21">Maryland</option>
+                        <option {% for key, value in data[0].states %}{% if value == "22" %}selected{% endif %}{% endfor %} value="22">Massachusetts</option>
+                        <option {% for key, value in data[0].states %}{% if value == "23" %}selected{% endif %}{% endfor %} value="23">Michigan</option>
+                        <option {% for key, value in data[0].states %}{% if value == "24" %}selected{% endif %}{% endfor %} value="24">Minnesota</option>
+                        <option {% for key, value in data[0].states %}{% if value == "25" %}selected{% endif %}{% endfor %} value="25">Mississippi</option>
+                        <option {% for key, value in data[0].states %}{% if value == "26" %}selected{% endif %}{% endfor %} value="26">Missouri</option>
+                        <option {% for key, value in data[0].states %}{% if value == "27" %}selected{% endif %}{% endfor %} value="27">Montana</option>
+                        <option {% for key, value in data[0].states %}{% if value == "28" %}selected{% endif %}{% endfor %} value="28">Nebraska</option>
+                        <option {% for key, value in data[0].states %}{% if value == "29" %}selected{% endif %}{% endfor %} value="29">Nevada</option>
+                        <option {% for key, value in data[0].states %}{% if value == "30" %}selected{% endif %}{% endfor %} value="30">New Hampshire</option>
+                        <option {% for key, value in data[0].states %}{% if value == "31" %}selected{% endif %}{% endfor %} value="31">New Jersey</option>
+                        <option {% for key, value in data[0].states %}{% if value == "32" %}selected{% endif %}{% endfor %} value="32">New Mexico</option>
+                        <option {% for key, value in data[0].states %}{% if value == "33" %}selected{% endif %}{% endfor %} value="33">New York</option>
+                        <option {% for key, value in data[0].states %}{% if value == "34" %}selected{% endif %}{% endfor %} value="34">North Carolina</option>
+                        <option {% for key, value in data[0].states %}{% if value == "35" %}selected{% endif %}{% endfor %} value="35">North Dakota</option>
+                        <option {% for key, value in data[0].states %}{% if value == "36" %}selected{% endif %}{% endfor %} value="36">Ohio</option>
+                        <option {% for key, value in data[0].states %}{% if value == "37" %}selected{% endif %}{% endfor %} value="37">Oklahoma</option>
+                        <option {% for key, value in data[0].states %}{% if value == "38" %}selected{% endif %}{% endfor %} value="38">Oregon</option>
+                        <option {% for key, value in data[0].states %}{% if value == "39" %}selected{% endif %}{% endfor %} value="39">Pennsylvania</option>
+                        <option {% for key, value in data[0].states %}{% if value == "40" %}selected{% endif %}{% endfor %} value="40">Rhode Island</option>
+                        <option {% for key, value in data[0].states %}{% if value == "41" %}selected{% endif %}{% endfor %} value="41">South Carolina</option>
+                        <option {% for key, value in data[0].states %}{% if value == "42" %}selected{% endif %}{% endfor %} value="42">South Dakota</option>
+                        <option {% for key, value in data[0].states %}{% if value == "43" %}selected{% endif %}{% endfor %} value="43">Tennessee</option>
+                        <option {% for key, value in data[0].states %}{% if value == "44" %}selected{% endif %}{% endfor %} value="44">Texas</option>
+                        <option {% for key, value in data[0].states %}{% if value == "45" %}selected{% endif %}{% endfor %} value="45">Utah</option>
+                        <option {% for key, value in data[0].states %}{% if value == "46" %}selected{% endif %}{% endfor %} value="46">Vermont</option>
+                        <option {% for key, value in data[0].states %}{% if value == "47" %}selected{% endif %}{% endfor %} value="47">Virginia</option>
+                        <option {% for key, value in data[0].states %}{% if value == "48" %}selected{% endif %}{% endfor %} value="48">Washington</option>
+                        <option {% for key, value in data[0].states %}{% if value == "49" %}selected{% endif %}{% endfor %} value="49">West Virginia</option>
+                        <option {% for key, value in data[0].states %}{% if value == "50" %}selected{% endif %}{% endfor %} value="50">Wisconsin</option>
+                        <option {% for key, value in data[0].states %}{% if value == "51" %}selected{% endif %}{% endfor %} value="51">Wyoming</option>
+
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+
+        <div class="row top-buffer">
+            <div class="col-sm-4">&nbsp;</div>
+            <div class="col-sm-6">
+                <div class="alert alert-warning">
+                    <br>Hold <b>Cmd</b> on Mac or <b>Cntr</b> on Win to select multiple fields.
+                </div>
+            </div>
+        </div>
+
+        <div class="row top-buffer">
+        	<div class="col-sm-4 text-right">User Roles</div>
+        	<div class="col-sm-6">
+                <select name="user_roles[]" multiple size="7" class="form-control">
+
+                    <optgroup label="Available User Roles">
+                        <option selected value="ROLE_USER">ROLE_USER</option>
+                        <option {% for key, value in data[0].roles %}{% if value == "ROLE_CLIENT" %}selected{% endif %}{% endfor %} value="ROLE_CLIENT">ROLE_CLIENT</option>
+                        <option {% for key, value in data[0].roles %}{% if value == "ROLE_STAFF" %}selected{% endif %}{% endfor %} value="ROLE_STAFF">ROLE_STAFF</option>
+                        <option {% for key, value in data[0].roles %}{% if value == "ROLE_LEAD_REVIEWER" %}selected{% endif %}{% endfor %} value="ROLE_LEAD_REVIEWER">ROLE_LEAD_REVIEWER</option>
+                        <option {% for key, value in data[0].roles %}{% if value == "ROLE_ADMIN" %}selected{% endif %}{% endfor %} value="ROLE_ADMIN">ROLE_ADMIN</option>
+                    </optgroup>
+        		</select>
+        	</div>
+        </div>
+
+        <div class="row top-buffer">
+            <div class="col-sm-4">&nbsp;</div>
+            <div class="col-sm-6">
+                <input type="submit" value="Update" class="btn btn-primary">&nbsp;
+                <input type="button" value="Cancel" class="btn btn-warning" onclick="document.location.href='{{path('tls_list_users')}}'">
+            </div>
+        </div>
+    </div>
+    </form>
+{% endblock %}
+
+{% block footer %}
+    {% include('footer.html.twig') %}
+{% endblock %}

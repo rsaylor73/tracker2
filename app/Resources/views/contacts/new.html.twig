@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+    {% if ajax != "1" %}
+        {% include('header.html.twig') %}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+<form name="myform2">
+<input type="hidden" name="dotID" value="{{dotID}}">
+<input type="hidden" name="mode" value="{{mode}}">
+<input type="hidden" name="projectID" value="{{projectID}}">
+
+<div class="row top-buffer">
+    <div class="col-sm-6">
+        <input type="text" name="first" placeholder="First Name" class="form-control">
+    </div>
+    <div class="col-sm-6">
+        <input type="text" name="last" placeholder="Last Name" class="form-control">
+    </div>
+</div>
+<div class="row top-buffer">
+    <div class="col-sm-6">
+        <input type="text" name="email" placeholder="Email" class="form-control">
+    </div>
+    <div class="col-sm-6">
+        <input type="text" name="phone" placeholder="Phone" class="form-control">
+    </div>
+</div>
+<div class="row top-buffer">
+    <div class="col-sm-12">
+        <input type="button" value="Save Contact" onclick="save_contact(this.form);document.getElementById('submit').disabled=''" class="btn btn-primary">
+    </div>
+</div>
+</form>
+
+<script>
+function save_contact(myform) {
+    $.get('{{path('savecontact')}}',
+    $(myform).serialize(),
+    function(php_msg) {
+        $("#contacts").html(php_msg);
+    });
+}
+</script>
+
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block footer %}
+    {% if ajax != "1" %}
+        {% include('footer.html.twig') %}
+    {% endif %}
+{% endblock %}

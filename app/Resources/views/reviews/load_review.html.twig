@@ -1,0 +1,17 @@
+<div class="row top-buffer">
+	<div class="col-sm-6">Project Phase:</div>
+	<div class="col-sm-6">
+		<select name="project_phase" id="project_phase" class="form-control" onchange="check_dropdown()">
+		<option selected value="">Select</option>
+		{{opt|raw}}
+		</select>
+	</div>
+</div>
+
+<script>
+function check_dropdown() {
+    var review = $('#project_phase :selected').val();
+    var url = '{{path('viewreview')}}' + '/' + review;
+    window.location.href=url;   
+}
+</script>

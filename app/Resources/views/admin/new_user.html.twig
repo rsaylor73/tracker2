@@ -1,0 +1,167 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {% include('header.html.twig') %}
+{% endblock %}
+
+{% block body %}
+	{% include('flash-messages.html.twig') %}
+    <form action="{{path('tls_save_user')}}" method="POST">
+	<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+      <h1 class="display-4">New User</h1>
+
+        <div class="row top-buffer">
+            <div class="col-sm-4 text-right">First Name:</div>
+            <div class="col-sm-6">
+                <input type="text" name="first" value="{{first}}" required class="form-control">
+            </div>
+        </div>
+
+        <div class="row top-buffer">
+            <div class="col-sm-4 text-right">Last Name:</div>
+            <div class="col-sm-6">
+                <input type="text" name="last" value="{{last}}" required class="form-control">
+            </div>
+        </div>
+
+        <div class="row top-buffer">
+        	<div class="col-sm-4 text-right">Username:</div>
+        	<div class="col-sm-6">
+        		<input type="text" name="username" value="{{username}}" required class="form-control">
+        	</div>
+        </div>
+
+        <div class="row top-buffer">
+        	<div class="col-sm-4 text-right">Password:</div>
+        	<div class="col-sm-6">
+        		<input type="password" name="password" required class="form-control">
+        	</div>
+        </div>
+
+        <div class="row top-buffer">
+        	<div class="col-sm-4 text-right">Email:</div>
+        	<div class="col-sm-6">
+        		<input type="text" name="email" value="{{email}}" required class="form-control">
+        	</div>
+        </div>
+
+        <div class="row top-buffer">
+        	<div class="col-sm-4 text-right">Enabled</div>
+        	<div class="col-sm-6">
+        		<select name="enabled" required class="form-control">
+    				<option selected value="true">Yes</option>
+    				<option value="false">No</option>
+        		</select>
+        	</div>
+        </div>
+
+        <div class="row top-buffer">
+            <div class="col-sm-4">&nbsp;</div>
+            <div class="col-sm-6">
+                <div class="alert alert-warning">
+                    <br>Hold <b>Cmd</b> on Mac or <b>Cntr</b> on Win to select multiple fields.
+                </div>
+            </div>
+        </div>
+
+        <div class="row top-buffer">
+            <div class="col-sm-4 text-right">States (may select multiple)</div>
+            <div class="col-sm-6">
+                <select name="states[]" multiple size="7" required class="form-control">
+                    <optgroup label="Available States">
+                        <option value="1">Alabama</option>
+                        <option value="2">Alaska</option>
+                        <option value="3">Arizona</option>
+                        <option value="4">Arkansas</option>
+                        <option value="5">Arkansas</option>
+                        <option value="6">Colorado</option>
+                        <option value="7">Connecticut</option>
+                        <option value="8">Delaware</option>
+                        <option value="9">District of Columbia</option>
+                        <option value="10">Florida</option>
+                        <option value="11">Georgia</option>
+                        <option value="12">Hawaii</option>
+                        <option value="13">Idaho</option>
+                        <option value="14">Illinois</option>
+                        <option value="15">Indiana</option>
+                        <option value="16">Iowa</option>
+                        <option value="17">Kansas</option>
+                        <option value="18">Kentucky</option>
+                        <option value="19">Louisiana</option>
+                        <option value="20">Maine</option>
+                        <option value="21">Maryland</option>
+                        <option value="22">Massachusetts</option>
+                        <option value="23">Michigan</option>
+                        <option value="24">Minnesota</option>
+                        <option value="25">Mississippi</option>
+                        <option value="26">Missouri</option>
+                        <option value="27">Montana</option>
+                        <option value="28">Nebraska</option>
+                        <option value="29">Nevada</option>
+                        <option value="30">New Hampshire</option>
+                        <option value="31">New Jersey</option>
+                        <option value="32">New Mexico</option>
+                        <option value="33">New York</option>
+                        <option value="34">North Carolina</option>
+                        <option value="35">North Dakota</option>
+                        <option value="36">Ohio</option>
+                        <option value="37">Oklahoma</option>
+                        <option value="38">Oregon</option>
+                        <option value="39">Pennsylvania</option>
+                        <option value="40">Rhode Island</option>
+                        <option value="41">South Carolina</option>
+                        <option value="42">South Dakota</option>
+                        <option value="43">Tennessee</option>
+                        <option value="44">Texas</option>
+                        <option value="45">Utah</option>
+                        <option value="46">Vermont</option>
+                        <option value="47">Virginia</option>
+                        <option value="48">Washington</option>
+                        <option value="49">West Virginia</option>
+                        <option value="50">Wisconsin</option>
+                        <option value="51">Wyoming</option>
+
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+
+        <div class="row top-buffer">
+            <div class="col-sm-4">&nbsp;</div>
+            <div class="col-sm-6">
+                <div class="alert alert-warning">
+                    <br>Hold <b>Cmd</b> on Mac or <b>Cntr</b> on Win to select multiple fields.
+                </div>
+            </div>
+        </div>
+
+        <div class="row top-buffer">
+        	<div class="col-sm-4 text-right">User Roles (may select multiple)</div>
+        	<div class="col-sm-6">
+                <select name="user_roles[]" multiple size="7" required class="form-control">
+                    <optgroup label="Available User Roles">
+                        <option value="ROLE_USER" selected>ROLE_USER (Required)</option>
+                        <option value="ROLE_CLIENT">ROLE_CLIENT</option>
+                        <option value="ROLE_STAFF">ROLE_STAFF</option>
+                        <option value="ROLE_LEAD_REVIEWER">ROLE_LEAD_REVIEWER</option>
+                        <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                    </optgroup>
+        		</select>
+        	</div>
+        </div>
+
+        <div class="row top-buffer">
+            <div class="col-sm-4">&nbsp;</div>
+            <div class="col-sm-6">
+                <input type="submit" value="Save" class="btn btn-primary">&nbsp;
+                <input type="button" value="Cancel" class="btn btn-warning" onclick="document.location.href='{{path('tls_list_users')}}'">
+            </div>
+        </div>
+    </div>
+    </form>
+
+{% endblock %}
+
+{% block footer %}
+    {% include('footer.html.twig') %}
+{% endblock %}

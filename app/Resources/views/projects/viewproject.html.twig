@@ -1,0 +1,222 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+    {% include('header.html.twig') %}
+{% endblock %}
+
+{% block body %}
+
+
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="thumbnail">
+                <a href="{{path('dots',{'id': dotID})}}">
+                    <img src="{{asset('logo/')}}{{data.logo}}" alt="" border="0">
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-10">
+            <h3>Projects : View</h3>
+        </div>
+    </div>
+
+    <div class="row top-buffer">
+        <div class="col-sm-3"><b>DOT Project #</b></div>
+        <div class="col-sm-3">
+            <form name="myform1" style="display:inline">
+            <input type="hidden" name="route" value="view_project">
+            <input type="hidden" name="id" value="{{id}}">
+            <input type="hidden" name="dotID" value="{{data.dotID}}">
+            <input type="hidden" name="projectID" value="{{data.projectID}}">
+            <input type="hidden" name="label" value="Project #">
+            <input type="text" name="dotproject" value="{{data.dotproject}}" class="form-control"
+            onblur="update_form(this.form)"
+            onchange="update_form(this.form)">
+            </form>
+        </div>
+        <div class="col-sm-3">
+            <div id="ajax_results"></div>
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <div class="col-sm-3"><b>Sub Account:</b></div>
+        <div class="col-sm-3">
+            <form name="myform2" style="display:inline">
+            <input type="hidden" name="route" value="view_project">
+            <input type="hidden" name="id" value="{{id}}">
+            <input type="hidden" name="dotID" value="{{data.dotID}}">
+            <input type="hidden" name="projectID" value="{{data.projectID}}">
+            <input type="hidden" name="label" value="Sub Account">
+            <input type="text" name="subaccount" value="{{data.subaccount}}" class="form-control"
+            onblur="update_form(this.form)"
+            onchange="update_form(this.form)">
+            </form>
+        </div>
+    </div>
+
+    <div class="row top-buffer">
+        <div class="col-sm-3">
+            <b>Project Type:</b>
+        </div>
+        <div class="col-sm-3">
+            <form name="myform3" style="display:inline">
+            <input type="hidden" name="route" value="view_project">
+            <input type="hidden" name="id" value="{{id}}">
+            <input type="hidden" name="dotID" value="{{data.dotID}}">
+            <input type="hidden" name="projectID" value="{{data.projectID}}">
+            <input type="hidden" name="label" value="projecttypeID">
+            <select name="projecttypeID" class="form-control"            
+            onblur="update_form(this.form)"
+            onchange="update_form(this.form)">
+            {{projecttype|raw}}</select>
+            </form>
+        </div>
+    </div>
+
+    <div class="row top-buffer">
+        <div class="col-sm-3">
+            <b>Project Description:</b>
+        </div>
+        <div class="col-sm-3">
+            <form name="myform4" style="display:inline">
+            <input type="hidden" name="route" value="view_project">
+            <input type="hidden" name="id" value="{{id}}">
+            <input type="hidden" name="dotID" value="{{data.dotID}}">
+            <input type="hidden" name="projectID" value="{{data.projectID}}">
+            <input type="hidden" name="label" value="description">
+            <input type="text" name="description" value="{{data.description}}" class="form-control"
+            onblur="update_form(this.form)"
+            onchange="update_form(this.form)">
+            </form>
+        </div>
+    </div>
+
+    <div class="row top-buffer">
+        <div class="col-sm-3">
+            <b>Est. Cont. Cost:</b>
+        </div>
+        <div class="col-sm-3">
+            <form name="myform5" style="display:inline">
+            <input type="hidden" name="route" value="view_project">
+            <input type="hidden" name="id" value="{{id}}">
+            <input type="hidden" name="dotID" value="{{data.dotID}}">
+            <input type="hidden" name="projectID" value="{{data.projectID}}">
+            <input type="hidden" name="label" value="est_const_cost">
+            <input type="text" name="est_const_cost" value="{{data.est_const_cost}}" class="form-control"
+            onblur="update_form(this.form)"
+            onchange="update_form(this.form)">
+            </form>
+        </div>
+    </div>
+
+    <div class="row top-buffer">
+        <div class="col-sm-3"><b>Estimated Ad Date:</b></div>
+        <div class="col-sm-3">
+            <form name="myform5" style="display:inline">
+            <input type="hidden" name="route" value="view_project">
+            <input type="hidden" name="id" value="{{id}}">
+            <input type="hidden" name="dotID" value="{{data.dotID}}">
+            <input type="hidden" name="projectID" value="{{data.projectID}}">
+            <input type="hidden" name="label" value="est_ad_date">
+            <input type="text" name="est_ad_date" value="{{data.est_ad_date}}" class="form-control date"
+            onblur="update_form(this.form)"
+            onchange="update_form(this.form)">
+            </form>
+        </div>
+    </div>
+
+    <div class="row top-buffer">
+        <div class="col-sm-3"><b>Region / District:</b></div>
+        <div class="col-sm-3">
+            <form name="myform6" style="display:inline">
+            <input type="hidden" name="route" value="view_project">
+            <input type="hidden" name="id" value="{{id}}">
+            <input type="hidden" name="dotID" value="{{data.dotID}}">
+            <input type="hidden" name="projectID" value="{{data.projectID}}">
+            <input type="hidden" name="label" value="regionID">
+            <select name="regionID" required class="form-control"
+            onblur="update_form(this.form)"
+            onchange="update_form(this.form)">
+            {{region|raw}}
+            </select>
+            </form>
+        </div>
+    </div>
+
+    <form name="myform7" style="display:inline">
+    <input type="hidden" name="route" value="view_project">
+    <input type="hidden" name="id" value="{{id}}">
+    <input type="hidden" name="dotID" value="{{data.dotID}}">
+    <input type="hidden" name="mode" value="view">
+    <input type="hidden" name="projectID" value="{{data.projectID}}">
+    <input type="hidden" name="label" value="contactID">
+    <div id="contacts">
+    <div class="row top-buffer">
+        <div class="col-sm-3"><b>Contact:</b></div>
+        <div class="col-sm-3" id="contacts">
+            <select name="contacts" class="form-control"
+            onblur="update_form(this.form)"
+            onchange="update_form(this.form)">
+            {{contacts|raw}}</select>
+        </div>
+        <div class="col-sm-6"><input type="button" value="Add New" onclick="new_contact(this.form)" class="btn btn-primary"></div>
+    </div>
+    </div>
+    </form>
+
+    <div class="row top-buffer">
+        <div class="col-sm-3"><b>Reviews:</b></div>
+        <div class="col-sm-9">
+            <div class="row">
+            	
+            	{% for r in review %}
+                    <div class="col-sm-2">
+                        <input type="button" onclick="document.location.href='{{path('viewreview', {'id': r.id})}}'"
+                        value="{{r.Description}}" class="btn btn-primary">
+                    </div>
+                {% endfor %}
+
+                {% if review is empty %}
+					<div class="col-sm-12 alert alert-danger">No Reviews Available</div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row top-buffer">
+        <div class="col-sm-12">
+            <input type="button" value="Delete" class="btn btn-danger" onclick="
+                if(confirm('You are about to delete this project and all reviews that are included in it. Are you sure you want to continue?')) {
+                        document.location.href='{{path('delete_project',{'id': data.projectID})}}'
+                }
+                ">
+        </div>
+    </div>
+
+<script>
+function new_contact(myform) {
+    $.get('{{path('addcontact')}}',
+    $(myform).serialize(),
+    function(php_msg) {
+        $("#contacts").html(php_msg);
+    });
+}
+
+function update_form(myform) {
+    $.get('{{path('updateform')}}',
+    $(myform).serialize(),
+    function(php_msg) {
+        $("#ajax_results").html(php_msg);
+    });
+}
+</script>
+
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block footer %}
+    {% include('footer.html.twig') %}
+{% endblock %}

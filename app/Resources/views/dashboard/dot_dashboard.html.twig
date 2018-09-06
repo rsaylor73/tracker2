@@ -1,0 +1,196 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+    {% include('header.html.twig') %}
+    {{chart1|raw}}
+    {{chart2|raw}}
+    {{chart3|raw}}
+    {{chart4|raw}}
+{% endblock %}
+{% block body %}
+{% include('flash-messages.html.twig') %}
+   <!-- Modal -->
+   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+       <div class="modal-dialog">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"></h4>
+
+               </div>
+               <div class="modal-body"><div class="te"></div></div>
+               <div class="modal-footer">
+                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                   <button type="button" class="btn btn-primary">Save changes</button>
+               </div>
+           </div>
+           <!-- /.modal-content -->
+       </div>
+       <!-- /.modal-dialog -->
+   </div>
+   <!-- /.modal -->
+
+
+<div class="row top-buffer">
+	<div class="col-sm-2">
+		<div class="thumbnail">
+			<img src="{{asset('logo/')}}{{logo}}"><br>
+      <form action="{{path('dots', {'id': dotID})}}" method="POST">
+      <select name="report_year" class="form-control">
+        <option value="">All</option>
+        {% for y in date_report %}
+          <option {% if y.year == report_year %}selected{% endif %} value="{{y.year}}">{{y.year}}</option>
+        {% endfor %}
+      </select><br>
+      <input type="submit" value="Filter Dashboard" class="btn btn-success">
+      </form>
+		</div>
+	</div>
+
+	<div class="col-sm-5">
+		<div id="container1" style="min-width: 400px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+	</div>
+	<div class="col-sm-5">
+		<div id="container2" style="min-width: 400px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+	</div>
+</div>
+
+<div class="row top-buffer">
+	<div class="col-sm-4">
+		<div class="row">
+			<div class="col-sm-12">
+				<div id="container4" style="min-width: 200px; height: 225px; margin: 0 auto"></div>
+			</div>
+		</div>
+
+    <style>
+.label-default {
+    background-color: #101010;
+}
+.custom-font {
+  font-size: 18px;
+}
+    </style>
+
+		<div class="row top-buffer">
+			<div class="col-sm-6">Total number of comments</div>
+			<div class="col-sm-6">
+        <span class="label label-default custom-font">{{total_comments}}</span>
+			</div>
+		</div>
+		<div class="row top-buffer">
+			<div class="col-sm-6">Average Comments per Review</div>
+			<div class="col-sm-6">
+				<span class="label label-default custom-font">{{total_comments_avg}}</span>
+			</div>
+		</div>
+    {#
+		<div class="row top-buffer">
+			<div class="col-sm-6">Cost Reduction:</div>
+			<div class="col-sm-6">$ {{total_cost_reduction|number_format(2, '.', ',')}}</div>
+		</div>
+		<div class="row top-buffer">
+			<div class="col-sm-6">Potential Cost Savings:</div>
+			<div class="col-sm-6">$243,121</div>
+		</div>
+    #}
+
+    <div class="row top-buffer">
+      <div class="col-sm-6">Potential Savings Opportunities:</div>
+      <div class="col-sm-6">{{savingsOpportunities}}</div>
+    </div>
+
+	</div>
+	<div class="col-sm-8">
+		<div id="container3" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+	</div>
+</div>
+
+
+<div class="row top-buffer">
+	<div class="col-sm-3">
+
+    <a data-toggle="modal" 
+    style="text-decoration:none; color:#FFFFFF;"
+    href="{{path('list_projects',{'dotID': dotID})}}" 
+    data-target="#myModal" data-backdrop="static" data-keyboard="false" 
+    class="btn btn-primary btn-lg btn-block" 
+    >Project Search</a>
+
+    </div>
+
+    <div class="col-sm-3">
+
+    {% set view = "0" %}
+    {% if app.user %}
+      {% for role in app.user.roles %}
+        {% if (role == "ROLE_ADMIN") or (role == "ROLE_LEAD_REVIEWER") %}
+          {% set view = "1" %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    {% if view == "1" %}
+    <a data-toggle="modal" 
+    style="text-decoration:none; color:#FFFFFF;"
+    href="{{path('new_project',{'dotID': dotID})}}" 
+    data-target="#myModal" data-backdrop="static" data-keyboard="false" 
+    class="btn btn-success btn-lg btn-block" 
+    >Add New Project</a>&nbsp;
+    {% endif %}
+
+    </div>
+    <div class="col-sm-3">
+
+    {% set view = "0" %}
+    {% if app.user %}
+      {% for role in app.user.roles %}
+        {% if (role == "ROLE_ADMIN") or (role == "ROLE_LEAD_REVIEWER") %}
+          {% set view = "1" %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    {% if view == "1" %}
+    <a data-toggle="modal" 
+    style="text-decoration:none; color:#FFFFFF;"
+    href="{{path('new_review',{'dotID':dotID})}}" 
+    data-target="#myModal" data-backdrop="static" data-keyboard="false" 
+    class="btn btn-warning btn-lg btn-block" 
+    >Add New Review</a>
+    {% endif %}
+
+    </div>
+
+    <div class="col-sm-3">
+
+    {% set view = "0" %}
+    {% if app.user %}
+      {% for role in app.user.roles %}
+        {% if (role == "ROLE_ADMIN") or (role == "ROLE_LEAD_REVIEWER") %}
+          {% set view = "1" %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    {% if view == "1" %}
+    <a data-toggle="modal" 
+    style="text-decoration:none; color:#FFFFFF;"
+    href="{{path('open_review',{'dotID': dotID})}}" 
+    data-target="#myModal" data-backdrop="static" data-keyboard="false" 
+    class="btn btn-info btn-lg btn-block" 
+    >Upload Review Files</a>
+    {% endif %}
+    
+
+	</div>
+
+
+</div>
+
+{% endblock %}
+{% block stylesheets %}
+  {{chart1}}
+{% endblock %}
+{% block footer %}
+    {% include('footer.html.twig') %}
+{% endblock %}

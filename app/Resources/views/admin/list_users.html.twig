@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {% include('header.html.twig') %}
+{% endblock %}
+
+{% block body %}
+	{% include('flash-messages.html.twig') %}
+
+	<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto">
+      <h1 class="display-4">Manage Users <input type="button" value="Add New User" class="btn btn-success btn-lg" onclick="document.location.href='{{path('tls_new_user')}}'"></h1>
+
+    <div class="navigation">
+        {{ knp_pagination_render(data) }}
+    </div>
+
+      <div class="row top-buffer">
+      	<div class="col-sm-12">
+      		<table class="table table-striped">
+      			<thead>
+      				<tr>
+                <th>Name</th>
+      					<th>Username</th>
+      					<th>Enabled</th>
+      					<th>Roles</th>
+                <th>Action</th>
+      				</tr>
+      			</thead>
+      			<tbody>
+  					{% for d in data %}
+  						<tr>
+                <td>{{d.first}} {{d.last}}</td>
+  							<td>{{d.username}}</td>
+  							<td>
+  								{% if d.enabled == "1" %}
+  									Yes
+  								{% else %}
+  									No
+  								{% endif %}
+  							</td>
+  							<td>
+                  {% set user_roles = "" %}
+                  {% for key, value in d.roles %}
+                    {% set user_roles = user_roles ~ value ~ ", " %}
+                  {% endfor %}
+                  {{ user_roles|slice(0, -2) }}
+  							</td>
+                <td>
+                  <input type="button" value="Edit" class="btn btn-primary" onclick="document.location.href='{{path('tls_edit_user', {'id': d.id})}}'">&nbsp;
+                  <input type="button" value="Delete" class="btn btn-warning" 
+                  onclick="if(confirm('You are about to delete {{d.username}}. Click OK to continue.')) { 
+                  document.location.href='{{path('tls_delete_user',{'id': d.id})}}'}">
+                </td>
+  						</tr>
+  					{% endfor %}
+      			</tbody>
+      		</table>
+      	</div>
+      </div>
+
+    <div class="navigation">
+        {{ knp_pagination_render(data) }}
+    </div>
+
+	</div>
+
+{% endblock %}
+
+{% block footer %}
+    {% include('footer.html.twig') %}
+{% endblock %}

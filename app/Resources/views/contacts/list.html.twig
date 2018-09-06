@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+    {% include('header.html.twig') %}
+{% endblock %}
+
+{% block body %}
+
+<div class="row top-buffer">
+	<div class="col-sm-12">
+		<h2>Contacts</h2>
+	</div>
+</div>
+{% include('flash-messages.html.twig') %}
+<div class="row top-buffer">
+	<div class="col-sm-12">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email</th>
+					<th>Phone</th>
+					<th>State</th>
+					<th>&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for d in data %}
+				<tr>
+					<td>{{d.first}}</td>
+					<td>{{d.last}}</td>
+					<td>{{d.email}}</td>
+					<td>{{d.phone}}</td>
+					<td>{{d.state_abbr}}</td>
+					<td>
+						<input type="button" value="Edit" class="btn btn-primary" onclick="document.location.href='{{path('editcontact',{'id':d.id})}}'">&nbsp;
+						<input type="button" value="Delete" class="btn btn-danger" 
+						onclick="if(confirm('You are about to delete {{d.first}} {{d.last}}')) { document.location.href='{{path('deletecontact',{'id':d.id})}}'}">
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block footer %}
+    {% include('footer.html.twig') %}
+{% endblock %}

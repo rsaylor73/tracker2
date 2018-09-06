@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+    {% include('header.html.twig') %}
+{% endblock %}
+
+{% block body %}
+
+<form name="myform2" action="{{path('updatecontact')}}" method="post">
+<input type="hidden" name="id" value="{{data.id}}">
+
+<div class="row top-buffer">
+    <div class="col-sm-12">
+        <h2>Edit Contact</h2>
+    </div>
+</div>
+
+<div class="row top-buffer">
+    <div class="col-sm-2">
+        First Name:
+    </div>
+    <div class="col-sm-4">
+        <input type="text" name="first" placeholder="First Name" value="{{data.first}}" class="form-control">
+    </div>
+    <div class="col-sm-2">
+        Last Name:
+    </div>
+    <div class="col-sm-4">
+        <input type="text" name="last" placeholder="Last Name" value="{{data.last}}" class="form-control">
+    </div>
+</div>
+<div class="row top-buffer">
+    <div class="col-sm-2">
+        Email:
+    </div>
+    <div class="col-sm-4">
+        <input type="text" name="email" placeholder="Email" value="{{data.email}}" class="form-control">
+    </div>
+    <div class="col-sm-2">
+        Phone:
+    </div>
+    <div class="col-sm-4">
+        <input type="text" name="phone" placeholder="Phone" value="{{data.phone}}" class="form-control">
+    </div>
+</div>
+<div class="row top-buffer">
+    <div class="col-sm-12">
+        <input type="submit" value="Update Contact" class="btn btn-primary">&nbsp;
+        <input type="button" value="Cancel" class="btn btn-warning" onclick="document.location.href='{{path('contacts')}}'">
+    </div>
+</div>
+</form>
+
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block footer %}
+    {% include('footer.html.twig') %}
+{% endblock %}

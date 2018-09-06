@@ -1,0 +1,264 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+    {% include('header.html.twig') %}
+{% endblock %}
+
+{% block body %}
+	{{stacked_column|raw}}
+	{{pie2|raw}}
+	{{pie3|raw}}
+	{{pie4|raw}}
+
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="thumbnail">
+                <img src="{{asset('logo')}}/{{data.logo}}" alt="">
+            </div>
+        </div>
+        <div class="col-sm-10">
+            <h3>Review</h3>
+        </div>
+    </div>
+
+    {% include('flash-messages.html.twig') %}
+
+    <div class="row top-buffer">
+        <div class="col-sm-3"><b>Project #</b>
+        </div>
+        <div class="col-sm-3">
+            <form name="myform1" style="display:inline">
+            <input type="hidden" name="projectID" value="{{data.projectID}}">
+            <input type="hidden" name="label" value="Project #">
+            <input type="text" name="dotproject" value="{{data.dotproject}}" class="form-control" disabled readonly>
+            </form>
+        </div>
+        <div class="col-sm-3"><b>Sub Account:</b></div>
+        <div class="col-sm-3">
+            <form name="myform2" style="display:inline">
+            <input type="hidden" name="projectID" value="{{data.projectID}}">
+            <input type="hidden" name="label" value="Sub Account">
+            <input type="text" name="subaccount" value="{{data.subaccount}}" class="form-control" disabled readonly>
+            </form>
+        </div>
+    </div>
+
+    <div class="row top-buffer">
+        <div class="col-sm-3"><b>Project Phase:</b></div>
+        <div class="col-sm-3">
+            <form name="myform3" style="display:inline">
+            <input type="hidden" name="reviewID" value="{{data.reviewID}}">
+            <input type="hidden" name="label" value="Project Phase">
+            <select name="project_phase" class="form-control"
+            onblur="update_form(this.form)"
+            onchange="update_form(this.form)">
+            {{SubmittalTypes|raw}}</select>
+            </form>
+        </div>
+        <div class="col-sm-6" id="ajax_results"></div>
+    </div>
+
+    <div class="row top-buffer">
+        <div class="col-sm-3"><b>Review Type:</b></div>
+        <div class="col-sm-3">
+            <form name="myform4" style="display:inline">
+            <input type="hidden" name="reviewID" value="{{data.reviewID}}">
+            <input type="hidden" name="label" value="Review Type">
+            <select name="review_type" class="form-control"
+            onblur="update_form(this.form)"
+            onchange="update_form(this.form)">
+                <option selected>{{data.review_type}}</option>
+                <option>Plans</option>
+                <option>Specifications</option>
+                <option>Cost Estimate</option>
+                <option>Design Calculations</option>
+            </select>
+            </form>
+        </div>
+        <div class="col-sm-3">
+        {% if found_xml == "1" %}
+            <div class="alert alert-success">XML file loaded</div>
+        {% else %}
+            <div class="alert alert-danger">XML file not loaded</div>
+        {% endif %}
+        </div>
+        <div class="col-sm-3">
+        
+        {% if pdf == "1" %}
+            <div class="alert alert-success">PDF file loaded</div>
+        {% else %}
+            <div class="alert alert-danger">PDF file not loaded</div>
+        {% endif %}
+    
+        </div>
+    </div>
+
+    <div class="row top-buffer">
+        <div class="col-sm-3"><b>Date Received:</b></div>
+        <div class="col-sm-3">
+            <form name="myform5" style="display:inline">
+            <input type="hidden" name="reviewID" value="{{data.reviewID}}">
+            <input type="hidden" name="label" value="Date Received">
+            <input type="text" name="date_received" value="{{data.date_received}}" class="form-control date"
+            onblur="update_form(this.form)"
+            onchange="update_form(this.form)">
+            </form>
+        </div>
+    </div>
+
+    <div class="row top-buffer">
+        <div class="col-sm-3"><b>Date Completed:</b></div>
+        <div class="col-sm-3">
+            <form name="myform6" style="display:inline">
+            <input type="hidden" name="reviewID" value="{{data.reviewID}}">
+            <input type="hidden" name="label" value="Date Completed">
+            <input type="text" name="date_completed" value="{{data.date_completed}}" class="form-control date"
+            onblur="update_form(this.form)"
+            onchange="update_form(this.form)">
+            </form>
+        </div>
+    </div>
+
+    <div class="row top-buffer">
+        <div class="col-sm-3">
+            <a data-toggle="modal" 
+            style="text-decoration:none; color:#FFFFFF;"
+            href="{{path('upload_xml',{'id':data.reviewID})}}" 
+            data-target="#myModal" data-backdrop="static" data-keyboard="false" 
+            class="btn btn-primary btn-lg btn-block" 
+            >Upload XML</a>
+        </div>
+        <div class="col-sm-3">
+            <a data-toggle="modal" 
+            style="text-decoration:none; color:#FFFFFF;"
+            href="{{path('upload_pdf',{'id':data.reviewID})}}" 
+            data-target="#myModal" data-backdrop="static" data-keyboard="false" 
+            class="btn btn-info btn-lg btn-block" 
+            >Upload PDF</a>
+        </div>
+        <div class="col-sm-3">
+            <a data-toggle="modal" 
+            style="text-decoration:none; color:#FFFFFF;"
+            href="{{path('upload_cost',{'id':data.reviewID})}}" 
+            data-target="#myModal" data-backdrop="static" data-keyboard="false" 
+            class="btn btn-success btn-lg btn-block" 
+            >Upload Cost Reduction</a>
+        </div>
+
+        <div class="col-sm-3">
+            <input type="button" value="Delete Review" class="btn btn-danger btn-lg btn-block"
+            onclick="if(confirm('You are about to delete this review. Click OK to continue.')) {
+                document.location.href='{{path('deletereview',{'id': data.reviewID, 'projectID': data.projectID})}}'
+            }">
+    </div>
+
+    <div class="row top-buffer">
+        <div class="col-sm-12">&nbsp;</div>
+    </div>
+
+    <div class="jumbotron">
+        {% if no_charts != "1" %}
+        <div class="row top-buffer">
+            <div class="col-sm-6">
+                <div id="container1" style="min-width: 200px; height: 400px; margin: 0 auto"></div>
+            </div>
+            <div class="col-sm-6">
+                <div id="container2" style="min-width: 200px; height: 400px; margin: 0 auto"></div>
+            </div>
+        </div>
+        <br>
+        <div class="row top-buffer">
+            <div class="col-sm-6">
+                <div id="container3" style="min-width: 200px; height: 400px; margin: 0 auto"></div>
+            </div>
+            <div class="col-sm-6">
+                <div id="container4" style="min-width: 200px; height: 400px; margin: 0 auto"></div>
+            </div>
+        </div>
+        {% else %}
+        <div class="row top-buffer">
+            <div class="col-sm-12 alert alert-info">
+                Upload an XML file to generate charts 
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <div class="jumbotron table-responsive">
+        <table class="table table-responsive table-striped table-hover" id="myTable">
+        <thead>
+            <tr>
+            <th>Label</th>
+            <th>Author</th>
+            <th>Comments</th>
+            <th>Category</th>
+            <th>Type</th>
+            <th>Discipline</th>
+            <th>Importance</th>
+            <th>Cost Reduction</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for d in dataview %}
+            <tr>
+                <td>{{d.Page_Label}}</td>
+                <td>{{d.Author}}</td>
+                <td>{{d.Comments}}</td>
+                <td>{{d.Category}}</td>
+                <td>{{d.Comment_Type}}</td>
+                <td>{{d.Discipline}}</td>
+                <td>{{d.Importance}}</td>
+                <td>{{d.Cost_Reduction}}</td>
+            </tr>
+        {% endfor %}
+        
+        </tbody>
+        </table>
+    </div>
+
+   <!-- Modal -->
+   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+       <div class="modal-dialog">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Loading please wait...</h4>
+
+               </div>
+               <div class="modal-body"><div class="te"></div></div>
+               <div class="modal-footer">
+                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                   <button type="button" class="btn btn-primary">Save changes</button>
+               </div>
+           </div>
+           <!-- /.modal-content -->
+       </div>
+       <!-- /.modal-dialog -->
+   </div>
+   <!-- /.modal -->
+
+<script>
+$(document).ready(function(){
+    $('#myTable').DataTable();
+});
+
+function update_form(myform) {
+    $.get('{{path('updateform')}}',
+    $(myform).serialize(),
+    function(php_msg) {
+        $("#ajax_results").html(php_msg);
+    });
+}
+</script>
+
+
+
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block footer %}
+    {% include('footer.html.twig') %}
+{% endblock %}

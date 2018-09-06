@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+    {% include('header.html.twig') %}
+{% endblock %}
+
+{% block body %}
+
+<div class="row top-buffer">
+	<div class="col-sm-12">
+		<h2>Users</h2> <input type="button" class="btn btn-success" value="Add New User" onclick="document.location.href='{{path('newuser')}}'">
+	</div>
+</div>
+{% include('flash-messages.html.twig') %}
+<div class="row top-buffer">
+	<div class="col-sm-12">
+		<table class="table table-striped" id="myTable">
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Access</th>
+					<th>Type</th>
+					<th>Email</th>
+					<th>DOTs</th>
+					<th>&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for d in data %}
+				<tr>
+					<td>{{d.first}}</td>
+					<td>{{d.last}}</td>
+					<td>{{d.group_name}}</td>
+					<td>{{d.userType}}</td>
+					<td>{{d.email}}</td>
+					<td>
+					{% set state_list = '' %}
+					{% if d.states is defined %}
+						{% for s in d.states %}
+							{% set state_list = state_list ~ s ~ ', ' %}
+						{% endfor %}
+						{{state_list|slice(0, -2)}}
+					{% else %}
+						<b><font color="red">MISSING</font></b>
+					{% endif %}
+					</td>
+					<td>
+						<input type="button" value="Edit" class="btn btn-primary" onclick="document.location.href='{{path('edituser',{'id':d.id})}}'">&nbsp;
+						<input type="button" value="DOTs" class="btn btn-info" onclick="
+						document.location.href='{{path('userdots',{'id':d.id})}}'">&nbsp;
+						<input type="button" value="Delete" class="btn btn-danger" 
+						onclick="if(confirm('You are about to delete {{d.first}} {{d.last}}')) { document.location.href='{{path('deleteuser',{'id':d.id})}}'}">
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script>
+$(document).ready(function(){
+    $('#myTable').DataTable();
+});
+</script>
+
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block footer %}
+    {% include('footer.html.twig') %}
+{% endblock %}

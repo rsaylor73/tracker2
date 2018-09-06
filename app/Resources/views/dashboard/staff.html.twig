@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+    {% include('header.html.twig') %}
+{% endblock %}
+{% block body %}
+
+<div class="row text-center">
+
+    {% for d in data %}
+    <div class="col-md-3 col-sm-6 hero-feature">
+        <div class="thumbnail">
+            <a href="{{path('dots', {'id':d.id})}}"><img src="{{asset('logo/')}}{{d.logo}}" alt=""></a>
+        </div>
+    </div>
+    {% endfor %}
+
+{% endblock %}
+{% block stylesheets %}
+{% endblock %}
+{% block footer %}
+    {% include('footer.html.twig') %}
+{% endblock %}

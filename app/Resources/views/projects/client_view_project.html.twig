@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+    {% include('header.html.twig') %}
+{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-sm-2">
+        <div class="thumbnail">
+            <img src="{{asset('logo/')}}{{data.logo}}" alt="" border="0">
+        </div>
+    </div>
+    <div class="col-sm-10">
+        <h3>Projects : View</h3>
+    </div>
+</div>
+
+<div class="row top-buffer">
+    <div class="col-sm-3"><b>DOT Project #</b></div>
+    <div class="col-sm-3">
+        <input type="text" value="{{data.dotproject}}" class="form-control" readonly>
+    </div>
+</div>
+<div class="row top-buffer">
+    <div class="col-sm-3"><b>Sub Account:</b></div>
+    <div class="col-sm-3">
+        <input type="text" value="{{data.subaccount}}" class="form-control" readonly>
+    </div>
+</div>
+
+<div class="row top-buffer">
+    <div class="col-sm-3">
+        <b>Project Type:</b>
+    </div>
+    <div class="col-sm-3">
+        <input type="text" value="{{data.project_type}}" class="form-control" readonly>
+    </div>
+</div>
+
+<div class="row top-buffer">
+    <div class="col-sm-3">
+        <b>Project Description:</b>
+    </div>
+    <div class="col-sm-3">
+        <input type="text" value="{{data.description}}" class="form-control" readonly>
+    </div>
+</div>
+
+<div class="row top-buffer">
+    <div class="col-sm-3">
+        <b>Est. Cont. Cost:</b>
+    </div>
+    <div class="col-sm-3">
+        <input type="text" value="{{data.est_const_cost}}" class="form-control" readonly>
+    </div>
+</div>
+
+<div class="row top-buffer">
+    <div class="col-sm-3"><b>Estimated Ad Date:</b></div>
+    <div class="col-sm-3">
+        <input type="text" value="{{data.est_ad_date}}" class="form-control" readonly>
+    </div>
+</div>
+
+<div class="row top-buffer">
+    <div class="col-sm-3"><b>Region / District:</b></div>
+    <div class="col-sm-3">
+        <input type="text" value="{{data.regionName}}" class="form-control" readonly>
+    </div>
+</div>
+
+<div class="row top-buffer">
+    <div class="col-sm-3"><b>Contact:</b></div>
+    <div class="col-sm-3">
+        <input type="text" value="{{data.first}} {{data.last}}" class="form-control" readonly>
+    </div>
+</div>
+
+<div class="row top-buffer">
+    <div class="col-sm-3"><b>Reviews:</b></div>
+    <div class="col-sm-9">
+        <div class="row">
+        	{% for r in review %}
+                <div class="col-sm-2">
+                    <input type="button" onclick="window.open('{{path('viewpdf',{'id':r.id,'file':r.pdf_file_client})}}')"
+                    value="{{r.Description}}" class="btn btn-primary">
+                </div>
+        	{% endfor %}
+        	{#
+            {foreach $review as $r}
+                <div class="col-sm-2">
+                    <input type="button" onclick="window.open('/pdf/{$r.id}')"
+                    value="{$r.Description}" class="btn btn-primary">
+                </div>
+            {/foreach}
+            <div class="col-sm-12 alert alert-danger">No Reviews Available</div>
+            #}
+
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block footer %}
+    {% include('footer.html.twig') %}
+{% endblock %}

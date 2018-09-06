@@ -1,0 +1,13 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<h1>Profile 
+	<input type="button" class="btn btn-primary" onclick="document.location.href='{{path('fos_user_profile_edit')}}'" value="Edit Profile">&nbsp;
+	<input type="button" class="btn btn-warning" onclick="document.location.href='{{path('fos_user_change_password')}}'" value="Change Password">
+</h1>
+
+<div class="fos_user_user_show">
+	<p>First Name: {{ user.first }}</p>
+	<p>Last Name: {{ user.last }}</p>
+    <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
+    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+</div>
