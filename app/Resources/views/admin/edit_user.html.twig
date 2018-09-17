@@ -48,7 +48,22 @@
         </div>
 
         <div class="row top-buffer">
-        	<div class="col-sm-4 text-right">Enabled</div>
+            <div class="col-sm-4 text-right">User Type:</div>
+            <div class="col-sm-6">
+                <select name="userType" class="form-control" required>
+                    {% if data[0].userType is not empty %}
+                        <option selected value="{{data[0].userType}}">{{data[0].userType}} (default)</option>
+                    {% else %}
+                        <option value="">Select</option>
+                    {% endif %}
+                    <option value="staff">staff</option>
+                    <option value="client">client</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row top-buffer">
+        	<div class="col-sm-4 text-right">Enabled:</div>
         	<div class="col-sm-6">
         		<select name="enabled" class="form-control">
         			{% if data[0].enabled == "0" %}

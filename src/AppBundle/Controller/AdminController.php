@@ -114,6 +114,7 @@ class AdminController extends Controller
         $newuser->setPassword($password_hash);
         $newuser->setRoles($user_roles);
         $newuser->setStates(serialize($states));
+        $newuser->setUserType($request->request->get('userType'));
 
         $em->persist($newuser);
         $em->flush();
@@ -158,10 +159,11 @@ class AdminController extends Controller
                 u.username,
                 u.email,
                 u.enabled,
-                u.roles
+                u.roles,
+                u.userType
 
             FROM
-                AppBundle\Entity\User u
+                AppBundle:User u
 
             WHERE
                 u.id = :id
@@ -195,6 +197,7 @@ class AdminController extends Controller
         $enabled = $request->request->get('enabled');
         $user_roles = $request->request->get('user_roles');
         $states = $request->request->get('states');
+        $userType = $request->request->get('userType');
 
         $password_hash = password_hash($password, PASSWORD_BCRYPT);
         $usernameCanonical = strtolower($username);
@@ -262,6 +265,8 @@ class AdminController extends Controller
          */
         $updateuser->setFirst($first);
         $updateuser->setLast($last);
+
+        $updateuser->setUserType($userType);
 
         /**
          * Update the password if requested.

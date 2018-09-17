@@ -46,7 +46,18 @@
         </div>
 
         <div class="row top-buffer">
-        	<div class="col-sm-4 text-right">Enabled</div>
+            <div class="col-sm-4 text-right">User Type:</div>
+            <div class="col-sm-6">
+                <select name="userType" class="form-control" required>
+                    <option value="">Select</option>
+                    <option value="staff">staff</option>
+                    <option value="client">client</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row top-buffer">
+        	<div class="col-sm-4 text-right">Enabled:</div>
         	<div class="col-sm-6">
         		<select name="enabled" required class="form-control">
     				<option selected value="true">Yes</option>
