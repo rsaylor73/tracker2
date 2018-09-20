@@ -12,16 +12,22 @@ class DotDashboardController extends Controller
     /**
      * @Route("/dots/{id}", name="dots")
      */
-    public function dotAction(Request $request, $id = '', User $user)
+    public function dotAction(Request $request, $id)
     {
-        /**
-         * This will check if the user is logged in
-         * and if not direct to the login screen.
-         */
         $em = $this->getDoctrine()->getManager();
+        $userID = "";
+
+        $usr = $this->getUser();
+        $sql = "SELECT `id` FROM `user` WHERE `username_canonical` = '$usr'";
+        $result = $em->getConnection()->prepare($sql);
+        $result->execute();
+        while ($row = $result->fetch()) {
+            $userID = $row['id'];
+        }
+        
         $session = $this->get('Commonservices')->getsessiondata();
         //$userID = $session->get('id');
-        $userID = $user->getId();
+        //$userID = $user->getId();
 
         $report_year = $request->request->get('report_year');
         if ($report_year == "") {
@@ -72,8 +78,8 @@ class DotDashboardController extends Controller
             `dots` d
 
         WHERE
-            `d`.`stateID` IN ($state_list)
-
+            #`d`.`stateID` IN ($state_list)
+            `d`.`id` = '$id'
         LIMIT 1
         ";
         

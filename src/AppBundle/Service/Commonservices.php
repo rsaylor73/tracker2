@@ -199,7 +199,7 @@ class Commonservices extends Controller
 				$test = "0";
 				$cat_test = "";
 				while ($row2 = $result2->fetch()) {
-					$category = $row2['Category'];
+					$category = $row2['Discipline'];
 					if (($cat_test != $category) && ($cat_test != "")) {
 						$data['data1'][$category] = "0";
 						$cat_test = $category;
@@ -217,7 +217,7 @@ class Commonservices extends Controller
 						$test = $test + 1;
 						$data['data1'][$category] = $test;
 					}
-					$type = $row2['Category'];
+					$type = $row2['Discipline'];
 					$data['data2'][$category][$type] = "0";
 				}
 
@@ -225,8 +225,8 @@ class Commonservices extends Controller
 				$result2->execute();
 				$test = 0;
 				while ($row2 = $result2->fetch()) {
-					$category = $row2['Category'];
-					$type = $row2['Category'];
+					$category = $row2['Discipline'];
+					$type = $row2['Discipline'];
 					$test = $data['data2'][$category][$type];
 					if ($test == "") {
 						$test = "1";
@@ -1012,8 +1012,84 @@ class Commonservices extends Controller
 
     public function generateStackedData($projectID, $reviewID)
     {
-    	// this needs to be re-engineered
-    	return(null);
+        $em = $this->em;
+        $sql = "SELECT DISTINCT `series` FROM `xml_data` WHERE `projectID` = '$projectID' 
+        AND `reviewID` = '$reviewID' ORDER BY `series` DESC LIMIT 1";
+        $result = $em->getConnection()->prepare($sql);
+        $result->execute();
+        $i = "0";
+        while ($row = $result->fetch()) {
+            $series = $row['series'];
+        }    	
+
+        // Chart Category
+        $sql = "
+        SELECT
+    		COUNT(`Category`) AS 'CategoryValue',
+    		`Category`
+
+        FROM
+			`xml_data`
+
+        WHERE
+            `projectID` = '$projectID'
+            AND `reviewID` = '$reviewID'
+            AND `series` = '$series'
+            AND `Category` != ''
+            AND `Discipline` != ''
+
+        GROUP BY `Category`
+
+        ORDER BY `Category` ASC
+        ";
+
+        $result = $em->getConnection()->prepare($sql);
+        $result->execute();
+        $chart_category = "";
+
+        while ($row = $result->fetch()) {
+            $chart_category .= "'".$row['Category']."',";
+        }
+        $chart_category = substr($chart_category,0,-1);
+
+        // Chart Discipline
+        $sql = "
+        SELECT
+    		COUNT(`Discipline`) AS 'DisciplineValue',
+    		`Discipline`,
+    		COUNT(`Category`) AS 'CategoryValue',
+    		`Category`
+
+        FROM
+			`xml_data`
+
+        WHERE
+            `projectID` = '$projectID'
+            AND `reviewID` = '$reviewID'
+            AND `series` = '$series'
+            AND `Category` != ''
+            AND `Discipline` != ''
+
+        GROUP BY `Discipline`, `Category`
+
+        ORDER BY `Discipline` ASC, `Category` ASC
+        ";
+
+        $result = $em->getConnection()->prepare($sql);
+        $result->execute();
+        $chart_data = "";
+        $value = "";
+
+        while ($row = $result->fetch()) {
+			$value = substr($value,0,-1);
+			$chart_data .= "{name:'".$row['Discipline']."',data: [".$row['DisciplineValue']."]},";
+        }
+        $chart_data = substr($chart_data,0,-1);
+
+        $data = array();
+        $data['chart_data'] = $chart_data;
+        $data['chart_category'] = $chart_category;
+        return($data);
     }
 
     public function stackedColumn($container, $category, $title, $title2, $chart_data)
@@ -1209,6 +1285,7 @@ class Commonservices extends Controller
     public function generatePieDataSpecial($projectID, $reviewID, $key, $key2, $search)
     {
         $em = $this->em;
+        $chart_data = "";
         $sql = "SELECT DISTINCT `series` FROM `xml_data` WHERE `projectID` = '$projectID' 
 		AND `reviewID` = '$reviewID' ORDER BY `series` DESC LIMIT 1";
         $series = "";
