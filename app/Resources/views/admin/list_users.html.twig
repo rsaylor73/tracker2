@@ -16,12 +16,13 @@
 
       <div class="row top-buffer">
       	<div class="col-sm-12">
-      		<table class="table table-striped">
+      		<table class="table table-striped sortable">
       			<thead>
       				<tr>
                 <th>Name</th>
       					<th>Username</th>
       					<th>Enabled</th>
+                <th>States</th>
       					<th>Roles</th>
                 <th>Action</th>
       				</tr>
@@ -38,6 +39,218 @@
   									No
   								{% endif %}
   							</td>
+                <td>
+                  {% set user_states = "" %}
+                  {% for key, value in d.states %}
+
+                    {% if value == "1" %}
+                      {% set value = "Alabama" %}
+                    {% endif %}
+
+                    {% if value == "2" %}
+                      {% set value = "Alaska" %}
+                    {% endif %}
+
+                    {% if value == "3" %}
+                      {% set value = "Arizona" %}
+                    {% endif %}
+
+                    {% if value == "4" %}
+                      {% set value = "Arkansas" %}
+                    {% endif %}
+
+                    {% if value == "5" %}
+                      {% set value = "Arkansas" %}
+                    {% endif %}
+
+                    {% if value == "6" %}
+                      {% set value = "Colorado" %}
+                    {% endif %}
+
+                    {% if value == "7" %}
+                      {% set value = "Connecticut" %}
+                    {% endif %}
+
+                    {% if value == "8" %}
+                      {% set value = "Delaware" %}
+                    {% endif %}
+
+                    {% if value == "9" %}
+                      {% set value = "District of Columbia" %}
+                    {% endif %}
+
+                    {% if value == "10" %}
+                      {% set value = "Florida" %}
+                    {% endif %}
+
+                    {% if value == "11" %}
+                      {% set value = "Georgia" %}
+                    {% endif %}
+
+                    {% if value == "12" %}
+                      {% set value = "Hawaii" %}
+                    {% endif %}
+
+                    {% if value == "13" %}
+                      {% set value = "Idaho" %}
+                    {% endif %}
+
+                    {% if value == "14" %}
+                      {% set value = "Illinois" %}
+                    {% endif %}
+
+                    {% if value == "15" %}
+                      {% set value = "Indiana" %}
+                    {% endif %}
+
+                    {% if value == "16" %}
+                      {% set value = "Iowa" %}
+                    {% endif %}
+
+                    {% if value == "17" %}
+                      {% set value = "Kansas" %}
+                    {% endif %}
+
+                    {% if value == "18" %}
+                      {% set value = "Kentucky" %}
+                    {% endif %}
+
+                    {% if value == "19" %}
+                      {% set value = "Louisiana" %}
+                    {% endif %}
+
+                    {% if value == "20" %}
+                      {% set value = "Maine" %}
+                    {% endif %}
+
+                    {% if value == "21" %}
+                      {% set value = "Maryland" %}
+                    {% endif %}
+
+                    {% if value == "22" %}
+                      {% set value = "Massachusetts" %}
+                    {% endif %}
+
+                    {% if value == "23" %}
+                      {% set value = "Michigan" %}
+                    {% endif %}
+
+                    {% if value == "24" %}
+                      {% set value = "Minnesota" %}
+                    {% endif %}
+
+                    {% if value == "25" %}
+                      {% set value = "Mississippi" %}
+                    {% endif %}
+
+                    {% if value == "26" %}
+                      {% set value = "Missouri" %}
+                    {% endif %}
+
+                    {% if value == "27" %}
+                      {% set value = "Montana" %}
+                    {% endif %}
+
+                    {% if value == "28" %}
+                      {% set value = "Nebraska" %}
+                    {% endif %}
+
+                    {% if value == "29" %}
+                      {% set value = "Nevada" %}
+                    {% endif %}
+
+                    {% if value == "30" %}
+                      {% set value = "New Hampshire" %}
+                    {% endif %}
+
+                    {% if value == "31" %}
+                      {% set value = "New Jersey" %}
+                    {% endif %}
+
+                    {% if value == "32" %}
+                      {% set value = "New Mexico" %}
+                    {% endif %}
+
+                    {% if value == "33" %}
+                      {% set value = "New York" %}
+                    {% endif %}
+
+                    {% if value == "34" %}
+                      {% set value = "North Carolina" %}
+                    {% endif %}
+
+                    {% if value == "35" %}
+                      {% set value = "North Dakota" %}
+                    {% endif %}
+
+                    {% if value == "36" %}
+                      {% set value = "Ohio" %}
+                    {% endif %}
+
+                    {% if value == "37" %}
+                      {% set value = "Oklahoma" %}
+                    {% endif %}
+
+                    {% if value == "38" %}
+                      {% set value = "Oregon" %}
+                    {% endif %}
+
+                    {% if value == "39" %}
+                      {% set value = "Pennsylvania" %}
+                    {% endif %}
+
+                    {% if value == "40" %}
+                      {% set value = "Rhode Island" %}
+                    {% endif %}
+
+                    {% if value == "41" %}
+                      {% set value = "South Carolina" %}
+                    {% endif %}
+
+                    {% if value == "42" %}
+                      {% set value = "South Dakota" %}
+                    {% endif %}
+
+                    {% if value == "43" %}
+                      {% set value = "Tennessee" %}
+                    {% endif %}
+
+                    {% if value == "44" %}
+                      {% set value = "Texas" %}
+                    {% endif %}
+
+                    {% if value == "45" %}
+                      {% set value = "Utah" %}
+                    {% endif %}
+
+                    {% if value == "46" %}
+                      {% set value = "Vermont" %}
+                    {% endif %}
+
+                    {% if value == "47" %}
+                      {% set value = "Virginia" %}
+                    {% endif %}
+
+                    {% if value == "48" %}
+                      {% set value = "Washington" %}
+                    {% endif %}
+
+                    {% if value == "49" %}
+                      {% set value = "West Virginia" %}
+                    {% endif %}
+
+                    {% if value == "50" %}
+                      {% set value = "Wisconsin" %}
+                    {% endif %}
+
+                    {% if value == "51" %}
+                      {% set value = "Wyoming" %}
+                    {% endif %}
+
+                    {% set user_states = user_states ~ value ~ ", " %}
+                  {% endfor %}
+                  {{ user_states|slice(0, -2) }}
+                </td>
   							<td>
                   {% set user_roles = "" %}
                   {% for key, value in d.roles %}

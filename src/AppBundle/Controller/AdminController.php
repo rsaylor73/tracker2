@@ -19,12 +19,15 @@ class AdminController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
         $pagenator = $this->get('knp_paginator');
-    	$query = $em->getRepository(User::class)->findAll();
+    	//$query = $em->getRepository(User::class)->findAll();
+        $query = $em->getRepository(User::class)->getListOfUsers();
+
         $results = $pagenator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 5)
+            $request->query->getInt('limit', 20)
         );
+
         return $this->render('admin/list_users.html.twig', [
         	'data' => $results,
         ]);

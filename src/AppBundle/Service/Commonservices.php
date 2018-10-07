@@ -73,7 +73,7 @@ class Commonservices extends Controller
 		WHERE
 			`p`.`dotID` = '$dotID'
 			AND `p`.`id` = `r`.`projectID`
-			AND DATE_FORMAT(`r`.`date_received`,'%Y') BETWEEN '$year1' AND '$year2'
+			AND DATE_FORMAT(`r`.`date_completed`,'%Y') BETWEEN '$year1' AND '$year2'
 		";
 		$review = array();
 		$result = $em->getConnection()->prepare($sql);
@@ -166,7 +166,7 @@ class Commonservices extends Controller
 		WHERE
 			`p`.`dotID` = '$dotID'
 			AND `p`.`id` = `r`.`projectID`
-			AND DATE_FORMAT(`r`.`date_received`,'%Y') BETWEEN '$year1' AND '$year2'
+			AND DATE_FORMAT(`r`.`date_completed`,'%Y') BETWEEN '$year1' AND '$year2'
 		";
 		$review = array();
 		$result = $em->getConnection()->prepare($sql);
@@ -217,7 +217,8 @@ class Commonservices extends Controller
 						$test = $test + 1;
 						$data['data1'][$category] = $test;
 					}
-					$type = $row2['Discipline'];
+					//$type = $row2['Discipline'];
+					$type = $row2['Category'];
 					$data['data2'][$category][$type] = "0";
 				}
 
@@ -226,7 +227,8 @@ class Commonservices extends Controller
 				$test = 0;
 				while ($row2 = $result2->fetch()) {
 					$category = $row2['Discipline'];
-					$type = $row2['Discipline'];
+					//$type = $row2['Discipline'];
+					$type = $row2['Category'];
 					$test = $data['data2'][$category][$type];
 					if ($test == "") {
 						$test = "1";
@@ -412,7 +414,7 @@ class Commonservices extends Controller
 			`p`.`dotID` = '$dotID'
 			AND `p`.`id` = `x`.`projectID`
 			AND `p`.`id` = `r`.`projectID`
-			AND DATE_FORMAT(`r`.`date_received`,'%Y') BETWEEN '$year1' AND '$year2'
+			AND DATE_FORMAT(`r`.`date_completed`,'%Y') BETWEEN '$year1' AND '$year2'
 			AND `x`.`Category` != 'Quality'
 			AND `x`.`Importance` != 'Minor'
 		";
@@ -426,6 +428,15 @@ class Commonservices extends Controller
 
 	public function comboChart($dotID, $year1 = '', $year2 = '')
 	{
+		switch ($dotID) {
+			case "1":
+				$title = "Total Number of Comments by Project Phase and District";
+				break;
+			default:
+				$title = "Total Number of Comments by Project Phase and Region";
+				break;
+		}
+
 		$em = $this->em;
 		if ($year1 == "") {
 			$year1 = date("Y");
@@ -444,7 +455,7 @@ class Commonservices extends Controller
 		WHERE
 			`p`.`dotID` = '$dotID'
 			AND `p`.`id` = `r`.`projectID`
-			AND DATE_FORMAT(`r`.`date_received`,'%Y') BETWEEN '$year1' AND '$year2'
+			AND DATE_FORMAT(`r`.`date_completed`,'%Y') BETWEEN '$year1' AND '$year2'
 			AND `r`.`project_phase` = `s`.`id`
 
 		ORDER BY `s`.`numbering` ASC
@@ -496,7 +507,7 @@ class Commonservices extends Controller
 			chart1 =
 			Highcharts.chart('container3', {
 				title: {
-					text: 'Total Number of Comments by Project Phase and Region'
+					text: '".$title."'
 				},
 			    credits: {
 			        enabled: false
@@ -571,7 +582,7 @@ class Commonservices extends Controller
 							`x`.`reviewID` = `r`.`reviewID`
 							AND `r`.`project_phase` = `s`.`id`
 							AND `s`.`Description` = '$value'
-							AND DATE_FORMAT(`r`.`date_received`, '%Y') BETWEEN '$year1' AND '$year2'
+							AND DATE_FORMAT(`r`.`date_completed`, '%Y') BETWEEN '$year1' AND '$year2'
 							AND `x`.`projectID` = `p`.`id`
 							AND `p`.`regionID` = `rg`.`id`
 							AND `rg`.`name` = '$row2[region_name]'

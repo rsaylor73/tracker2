@@ -120,7 +120,7 @@ class ClientDashboardController extends Controller
         WHERE
             `p`.`dotID` = '$dotID'
             AND `p`.`id` = `r`.`projectID`
-            AND DATE_FORMAT(`r`.`date_received`,'%Y') BETWEEN '$year1' AND '$year2'
+            AND DATE_FORMAT(`r`.`date_completed`,'%Y') BETWEEN '$year1' AND '$year2'
         ";
         $total_reviews = "0";
         $result = $em->getConnection()->prepare($sql);
@@ -140,7 +140,7 @@ class ClientDashboardController extends Controller
         WHERE
             `p`.`dotID` = '$dotID'
             AND `p`.`id` = `r`.`projectID`
-            AND DATE_FORMAT(`r`.`date_received`,'%Y') BETWEEN '$year1' AND '$year2'
+            AND DATE_FORMAT(`r`.`date_completed`,'%Y') BETWEEN '$year1' AND '$year2'
         ";
         $result = $em->getConnection()->prepare($sql);
         $result->execute();
@@ -234,7 +234,7 @@ class ClientDashboardController extends Controller
         WHERE
             `p`.`dotID` = '$dotID'
             AND `p`.`id` = `r`.`projectID`
-            AND DATE_FORMAT(`r`.`date_received`,'%Y') BETWEEN '$year1' AND '$year2'
+            AND DATE_FORMAT(`r`.`date_completed`,'%Y') BETWEEN '$year1' AND '$year2'
         ";
         $total_cost_reduction = "0";
         $result = $em->getConnection()->prepare($sql);
@@ -352,10 +352,16 @@ class ClientDashboardController extends Controller
         $savingsOpportunities = $this->get('Commonservices')->savingsOpportunities($dotID, $year1, $year2);
 
         $date_report = array();
-        $date_report[0]['year'] = date("Y");
-        $date_report[1]['year'] = $date_report[0]['year'] - 1;
-        $date_report[2]['year'] = $date_report[0]['year'] - 2;
-        $date_report[3]['year'] = $date_report[0]['year'] - 3;
+        $year_start = "2016";
+        $year_end = date("Y");
+
+        $year_select = "";
+        $y = "0";
+        for ($i = $year_start; $i < $year_end; $i++) {
+            $date_report[$y]['year'] = $i;
+            $y++;
+        }
+        $date_report[$y]['year'] = $year_end;
 
         return $this->render('dashboard/client.html.twig', [
             'dotID' => $dotID,

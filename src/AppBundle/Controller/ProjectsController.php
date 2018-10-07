@@ -57,8 +57,9 @@ class ProjectsController extends Controller
         $newprojectID = $em->getConnection()->lastInsertId();
 
         $this->addFlash('info', 'The project was added.');
-        return $this->redirectToRoute('view_project', [
-            'id' => $newprojectID,
+        return $this->redirectToRoute('create_review', [
+            'dotID' => $dotID,
+            'dotproject' => $newprojectID,
         ]);
     }
 
@@ -71,6 +72,15 @@ class ProjectsController extends Controller
          * This will display the modal search window
          */
         $em = $this->getDoctrine()->getManager();
+
+        // get dotID
+        $dotID = "";
+        $sql = "SELECT `dotID` FROM `projects` WHERE `id` = '$id'";
+        $result = $em->getConnection()->prepare($sql);
+        $result->execute();
+        while ($row = $result->fetch()) {
+            $dotID = $row['dotID'];
+        }
 
         $sql = "DELETE FROM `review` WHERE `projectID` = '$id'";
         $result = $em->getConnection()->prepare($sql);
@@ -85,7 +95,9 @@ class ProjectsController extends Controller
         $result->execute();
 
         $this->addFlash('success', 'The project was deleted.');
-        return $this->redirectToRoute('dashboard');
+        return $this->redirectToRoute('dots',[
+            'id' => $dotID,
+        ]);
     }
 
     /**
@@ -180,15 +192,14 @@ class ProjectsController extends Controller
             $dotproject .= "<option value=\"$row[id]\">$row[dotproject]</option>";
         }
 
-        $year = date("Y");
-        $p_year = $year - 1;
-        $n_year = $year + 1;
+        $year_start = "2016";
+        $year_end = date("Y");
 
-        $year_select = "
-        <option>$p_year</option>
-        <option>$year</option>
-        <option>$n_year</option>
-        ";
+        $year_select = "";
+        for ($i = $year_start; $i < $year_end; $i++) {
+            $year_select .= "<option>$i</option>";
+        }
+        $year_select .= "<option>$year_end</option>";
 
         return $this->render('modal/listprojects.html.twig', [
             'dotproject' => $dotproject,
