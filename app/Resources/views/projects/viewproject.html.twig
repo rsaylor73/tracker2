@@ -5,6 +5,12 @@
 
 {% block body %}
 
+{% set staff = "1" %}
+{% for role in app.user.roles %}
+    {% if role == "ROLE_CLIENT" %}
+        {% set staff = "0" %}
+    {% endif %}
+{% endfor %}
 
     <div class="row">
         <div class="col-sm-2">
@@ -158,7 +164,7 @@
             onchange="update_form(this.form)">
             {{contacts|raw}}</select>
         </div>
-        <div class="col-sm-6"><input type="button" value="Add New" onclick="new_contact(this.form)" class="btn btn-primary"></div>
+        <div class="col-sm-6"><input type="button" {% if staff == "0" %}disabled="disabled"{% endif %} value="Add New" onclick="new_contact(this.form)" class="btn btn-primary"></div>
     </div>
     </div>
     </form>
@@ -185,7 +191,7 @@
 
     <div class="row top-buffer">
         <div class="col-sm-12">
-            <input type="button" value="Delete" class="btn btn-danger" onclick="
+            <input type="button" value="Delete" {% if staff == "0" %}disabled="disabled"{% endif %} class="btn btn-danger" onclick="
                 if(confirm('You are about to delete this project and all reviews that are included in it. Are you sure you want to continue?')) {
                         document.location.href='{{path('delete_project',{'id': data.projectID})}}'
                 }
@@ -202,6 +208,7 @@ function new_contact(myform) {
     });
 }
 
+{% if staff == "1" %}
 function update_form(myform) {
     $.get('{{path('updateform')}}',
     $(myform).serialize(),
@@ -209,6 +216,11 @@ function update_form(myform) {
         $("#ajax_results").html(php_msg);
     });
 }
+{% else %}
+function update_form(myform) {
+    {# do nothing #}
+}
+{% endif %}
 </script>
 
 {% endblock %}

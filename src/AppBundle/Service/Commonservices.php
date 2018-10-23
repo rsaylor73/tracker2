@@ -334,15 +334,21 @@ class Commonservices extends Controller
 		<script>
 		Highcharts.setOptions({
      	colors: [
-     		'#50B432', 
-     		'#ED561B', 
-     		'#DDDF00', 
-     		'#24CBE5', 
-     		'#64E572', 
-     		'#FF9655', 
-     		'#FFF263',
-     		'#6AF9C4',
-     		'#0026ff'
+     		'#5b9bd5', 
+     		'#ed7d31', 
+     		'#70ad47', 
+     		'#ffc000', 
+     		'#a5a5a5', 
+     		'#b400dc', 
+     		'#0000dc',
+     		'#64dc00',
+     		'#f0f000',
+     		'#dc00b4',
+     		'#00dcdc',
+     		'#5a5a5a',
+     		'#dca000',
+     		'#00f000',
+     		'#2d64dc'
      		]
     	});
 		var chart1; // globally available
@@ -1235,15 +1241,21 @@ class Commonservices extends Controller
         <script>
 		Highcharts.setOptions({
      	colors: [
-     		'#50B432', 
-     		'#ED561B', 
-     		'#DDDF00', 
-     		'#24CBE5', 
-     		'#64E572', 
-     		'#FF9655', 
-     		'#FFF263',
-     		'#6AF9C4',
-     		'#0026ff'
+     		'#5b9bd5', 
+     		'#ed7d31', 
+     		'#70ad47', 
+     		'#ffc000', 
+     		'#a5a5a5', 
+     		'#b400dc', 
+     		'#0000dc',
+     		'#64dc00',
+     		'#f0f000',
+     		'#dc00b4',
+     		'#00dcdc',
+     		'#5a5a5a',
+     		'#dca000',
+     		'#00f000',
+     		'#2d64dc'
      		]
     	});
         var chart1; // globally available

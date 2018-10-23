@@ -9,16 +9,13 @@
 	{{pie3|raw}}
 	{{pie4|raw}}
 
-    {% set staff = "" %}
+    {% set staff = "0" %}
 
     {% for role in app.user.roles %}
         {% if (role == "ROLE_ADMIN") or (role == "ROLE_STAFF") or (role == "ROLE_LEAD_REVIEWER") %}
             {% set staff = "1" %}
-        {% else %}
-            {% set staff = "0" %}
         {% endif %}
     {% endfor %}
-
 
     <div class="row">
         <div class="col-sm-2">
@@ -103,7 +100,9 @@
         
         {% if staff == "1" %}
         {% if pdf == "1" %}
-            <div class="alert alert-success">PDF file loaded</div>
+            <div class="alert alert-success">PDF file loaded
+                <input type="button" onclick="window.open(' {{path('viewpdf', {'id':data['reviewID']} )}}  ')" value="Download PDF" class="btn btn-primary">
+            </div>
         {% else %}
             <div class="alert alert-danger">PDF file not loaded</div>
         {% endif %}

@@ -87,12 +87,13 @@
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="{{path('dashboard')}}"><img src="{{asset('img/bln.png')}}" height="32"></a>
+    <a class="navbar-brand"><img src="{{asset('img/bln.png')}}" height="32"></a>
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
     {% if app.user %}
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
+            <li><a href="{{path('dashboard')}}">Home</a></li>
             <li>
                 {% if dotID != "" %}
                     <a href="{{path('dots',{'id':dotID})}}">Dashboard</a>

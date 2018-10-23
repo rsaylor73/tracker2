@@ -294,7 +294,7 @@ class DotDashboardController extends Controller
             $data3 = substr($data3, 0, -1);
         }
 
-        $chart1 = $this->get('Commonservices')->pieChartDrill('container1', $data1, $data3, 'Number of Comments by Category', 'Click the slices to view Comment Types of each Category.', 'Categories');
+        $chart1 = $this->get('Commonservices')->pieChartDrill('container1', $data1, $data3, 'Distribution of Comments by Category', 'Click the slices to view Comment Types of each Category.', 'Categories');
 
         // graph 2
         $per = "0";
@@ -327,7 +327,7 @@ class DotDashboardController extends Controller
             $data3 = substr($data3, 0, -1);
         }
 
-        $chart2 = $this->get('Commonservices')->pieChartDrill('container2', $data1, $data3, 'Number of Comments by Discipline', 'Click the slices to view Categories of each Discipline.', 'Discipline');
+        $chart2 = $this->get('Commonservices')->pieChartDrill('container2', $data1, $data3, 'Distribution of Comments by Discipline', 'Click the slices to view Categories of each Discipline.', 'Discipline');
 
         // graph 3
         $chart3 = $this->get('Commonservices')->comboChart($dotID, $year1, $year2);

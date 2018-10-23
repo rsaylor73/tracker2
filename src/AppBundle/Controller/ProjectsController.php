@@ -529,7 +529,7 @@ class ProjectsController extends Controller
             'review' => $review,
             //'dotproject' => $dotproject,
             'dotID' => $dotID,
-            'projecttype' => $this->get('Commonservices')->getProjectTypes(''),
+            'projecttype' => $this->get('Commonservices')->getProjectTypes($projecttypeID),
             'region' => $this->get('Commonservices')->getRegion('', $state),
             'contacts' => $contacts,
             'id' => $id,

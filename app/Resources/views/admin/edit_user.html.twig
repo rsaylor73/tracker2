@@ -81,7 +81,7 @@
             <div class="col-sm-4">&nbsp;</div>
             <div class="col-sm-6">
                 <div class="alert alert-warning">
-                    <br>Hold <b>Cmd</b> on Mac or <b>Cntr</b> on Win to select multiple fields.
+                    <br>Hold <b>Cmd</b> on Mac or <b>Ctrl</b> on Win to select multiple fields.
                 </div>
             </div>
         </div>
@@ -91,12 +91,17 @@
                 <select name="states[]" multiple size="7" required class="form-control">
 
                     <optgroup label="Available States">
+                        {#
                         <option {% for key, value in data[0].states %}{% if value == "1" %}selected{% endif %}{% endfor %} value="1">Alabama</option>
                         <option {% for key, value in data[0].states %}{% if value == "2" %}selected{% endif %}{% endfor %} value="2">Alaska</option>
+                        #}
                         <option {% for key, value in data[0].states %}{% if value == "3" %}selected{% endif %}{% endfor %} value="3">Arizona</option>
+                        {#
                         <option {% for key, value in data[0].states %}{% if value == "4" %}selected{% endif %}{% endfor %} value="4">Arkansas</option>
                         <option {% for key, value in data[0].states %}{% if value == "5" %}selected{% endif %}{% endfor %} value="5">Arkansas</option>
+                        #}
                         <option {% for key, value in data[0].states %}{% if value == "6" %}selected{% endif %}{% endfor %} value="6">Colorado</option>
+                        {#
                         <option {% for key, value in data[0].states %}{% if value == "7" %}selected{% endif %}{% endfor %} value="7">Connecticut</option>
                         <option {% for key, value in data[0].states %}{% if value == "8" %}selected{% endif %}{% endfor %} value="8">Delaware</option>
                         <option {% for key, value in data[0].states %}{% if value == "9" %}selected{% endif %}{% endfor %} value="9">District of Columbia</option>
@@ -122,7 +127,9 @@
                         <option {% for key, value in data[0].states %}{% if value == "29" %}selected{% endif %}{% endfor %} value="29">Nevada</option>
                         <option {% for key, value in data[0].states %}{% if value == "30" %}selected{% endif %}{% endfor %} value="30">New Hampshire</option>
                         <option {% for key, value in data[0].states %}{% if value == "31" %}selected{% endif %}{% endfor %} value="31">New Jersey</option>
+                        #}
                         <option {% for key, value in data[0].states %}{% if value == "32" %}selected{% endif %}{% endfor %} value="32">New Mexico</option>
+                        {#
                         <option {% for key, value in data[0].states %}{% if value == "33" %}selected{% endif %}{% endfor %} value="33">New York</option>
                         <option {% for key, value in data[0].states %}{% if value == "34" %}selected{% endif %}{% endfor %} value="34">North Carolina</option>
                         <option {% for key, value in data[0].states %}{% if value == "35" %}selected{% endif %}{% endfor %} value="35">North Dakota</option>
@@ -141,6 +148,7 @@
                         <option {% for key, value in data[0].states %}{% if value == "48" %}selected{% endif %}{% endfor %} value="48">Washington</option>
                         <option {% for key, value in data[0].states %}{% if value == "49" %}selected{% endif %}{% endfor %} value="49">West Virginia</option>
                         <option {% for key, value in data[0].states %}{% if value == "50" %}selected{% endif %}{% endfor %} value="50">Wisconsin</option>
+                        #}
                         <option {% for key, value in data[0].states %}{% if value == "51" %}selected{% endif %}{% endfor %} value="51">Wyoming</option>
 
                     </optgroup>
