@@ -102,12 +102,18 @@
                 {% endif %}
             </li>
             {% set view = "0" %}
+            {% set admin_view = "0" %}
+
             {% for role in app.user.roles %}
+                {% if (role == "ROLE_ADMIN") or (role == "ROLE_LEAD_REVIEWER") %}
+                    {% set admin_view = "1" %}
+                {% endif %}
+
                 {% if (role == "ROLE_ADMIN") or (role == "ROLE_STAFF") or (role == "ROLE_LEAD_REVIEWER") %}
                     {% set view = "1" %}
                 {% endif %}
             {% endfor %}
-            {% if view == "1" %}
+            {% if admin_view == "1" %}
                 <li><a href="{{path('contacts')}}">Manage Contacts</a></li>
             {% endif %}
 

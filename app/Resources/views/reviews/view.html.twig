@@ -31,7 +31,7 @@
     {% include('flash-messages.html.twig') %}
 
     <div class="row top-buffer">
-        <div class="col-sm-3"><b>Project #</b>
+        <div class="col-sm-3"><b>Project ID</b>
         </div>
         <div class="col-sm-3">
             <form name="myform1" style="display:inline">
@@ -111,6 +111,7 @@
         </div>
     </div>
 
+    {#
     <div class="row top-buffer">
         <div class="col-sm-3"><b>Date Received:</b></div>
         <div class="col-sm-3">
@@ -123,6 +124,7 @@
             </form>
         </div>
     </div>
+    #}
 
     <div class="row top-buffer">
         <div class="col-sm-3"><b>Date Completed:</b></div>
@@ -206,6 +208,7 @@
 
     </div>
 
+    {% if staff == "1" %}
     <div class="jumbotron table-responsive">
         <table class="table table-responsive table-striped table-hover" id="myTable">
         <thead>
@@ -237,6 +240,7 @@
         </tbody>
         </table>
     </div>
+    {% endif %}
 
    <!-- Modal -->
    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -264,6 +268,7 @@ $(document).ready(function(){
     $('#myTable').DataTable();
 });
 
+{% if staff == "1" %}
 function update_form(myform) {
     $.get('{{path('updateform')}}',
     $(myform).serialize(),
@@ -271,6 +276,10 @@ function update_form(myform) {
         $("#ajax_results").html(php_msg);
     });
 }
+{% else %}
+function update_form(myform) {
+}
+{% endif %}
 </script>
 
 
