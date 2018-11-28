@@ -37,10 +37,14 @@
                     </th>
                     <th><b>Project ID</b></th>
                     <th><b>Sub Account</b></th>
-                    <th><b>Region/District</b></th>
+                    <th><b>Region</b></th>
                     <th width="250"><b>Project Description</b></th>
                     <th><b>Project Type</b></th>
-                    <th><input type="submit" value="Report" class="btn btn-success btn-block"></th>
+                    <th><b>Project Phase</b></th>
+                    <th><b>Const. Cost</b></th>
+                    <th>
+                        <input type="submit" value="Report" class="btn btn-success btn-block">
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -61,8 +65,14 @@
                 <td>
                     {{r.description}}
                 </td>
-                <td colspan="2">
+                <td>
                     {{r.project_type}}
+                </td>
+                <td>
+                    {{r.SubmittalTypes}}
+                </td>
+                <td colspan="2">
+                    $ {{r.est_const_cost|number_format(0, '.', ',')}}
                 </td>
             </tr>
             {% endfor %}

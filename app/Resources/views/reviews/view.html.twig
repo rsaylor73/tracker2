@@ -8,6 +8,8 @@
 	{{pie2|raw}}
 	{{pie3|raw}}
 	{{pie4|raw}}
+    {{discipline_bar|raw}}
+    {{comment_bar|raw}}
 
     {% set staff = "0" %}
 
@@ -183,21 +185,28 @@
         {% if no_charts != "1" %}
         <div class="row top-buffer">
             <div class="col-sm-6">
-                <div id="container1" style="min-width: 200px; height: 400px; margin: 0 auto"></div>
+                <div id="discipline" style="min-width: 200px; height: 400px; margin: 0 auto"></div>
             </div>
+            <div class="col-sm-6">
+                <div id="comment" style="min-width: 200px; height: 400px; margin: 0 auto"></div>
+            </div>
+        </div>
+
+        <div class="row top-buffer">
             <div class="col-sm-6">
                 <div id="container2" style="min-width: 200px; height: 400px; margin: 0 auto"></div>
             </div>
-        </div>
-        <br>
-        <div class="row top-buffer">
             <div class="col-sm-6">
                 <div id="container3" style="min-width: 200px; height: 400px; margin: 0 auto"></div>
             </div>
+        </div>
+
+        <div class="row top-buffer">
             <div class="col-sm-6">
                 <div id="container4" style="min-width: 200px; height: 400px; margin: 0 auto"></div>
             </div>
         </div>
+        
         {% else %}
         <div class="row top-buffer">
             <div class="col-sm-12 alert alert-info">

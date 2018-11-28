@@ -163,6 +163,7 @@ class ClientDashboardController extends Controller
         }
 
         $len = strlen($total_comments);
+        $pre = "";
         switch ($len) {
             case "1":
                 $pre = "00000";
@@ -346,7 +347,7 @@ class ClientDashboardController extends Controller
 
         // graph 4
         $y = date("Y");
-        $title = "$y Year-to-Date Reviews";
+        $title = "Reviews";
         $chart4 = $this->get('Commonservices')->gauge('container4', $title, $total_reviews);
 
         $savingsOpportunities = $this->get('Commonservices')->savingsOpportunities($dotID, $year1, $year2);

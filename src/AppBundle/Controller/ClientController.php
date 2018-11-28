@@ -208,7 +208,8 @@ class ClientController extends Controller
             `p`.`regionID`,
             `r`.`name` AS 'region_name',
             `p`.`description`,
-            `rw`.`projectID`
+            `rw`.`projectID`,
+            `p`.`est_const_cost`
 
         FROM
             `projects` p
@@ -456,7 +457,7 @@ class ClientController extends Controller
             $data1 = substr($data1,0,-1);
             $data3 = substr($data3,0,-1);
         }
-        $chart1 = $this->get('Commonservices')->pieChartDrill('container1',$data1,$data3,'Number of Comments by Category','Click the slices to view Comment Types of each Category.','Categories');
+        $chart1 = $this->get('Commonservices')->pieChartDrill('container1',$data1,$data3,'Distribution of Comments by Category','Click the slices to view Comment Types of each Category.','Categories');
 
 
         // graph 2
@@ -487,7 +488,7 @@ class ClientController extends Controller
             $data3 = substr($data3,0,-1);
         }
 
-        $chart2 = $this->get('Commonservices')->pieChartDrill('container2',$data1,$data3,'Number of Comments by Discipline','Click the slices to view Categories of each Discipline.','Discipline');
+        $chart2 = $this->get('Commonservices')->pieChartDrill('container2',$data1,$data3,'Distribution of Comments by Discipline','Click the slices to view Categories of each Discipline.','Discipline');
 
         // graph 3
         $chart3_data = $this->report_graph_avg_comments_per_phase($projects);
@@ -500,7 +501,7 @@ class ClientController extends Controller
         $chart3_bar_data = substr($chart3_bar_data, 0, -1);
         $chart3_bar_label = substr($chart3_bar_label, 0, -1);
 
-        $chart3 = $this->get('Commonservices')->barChartLine('container3','Number Comments per Phase', $sub1 = "Comments", $sub2 = "Comments", "Bar Chart", "Line Chart", $chart3_bar_data, $chart3_bar_label);
+        $chart3 = $this->get('Commonservices')->barChartLine('container3','Number of Comments per Phase', $sub1 = "Comments", $sub2 = "Comments", "Bar Chart", "Line Chart", $chart3_bar_data, $chart3_bar_label);
 
         return $this->render('projects/client_view_report.html.twig', [
             'logo' => $logo,

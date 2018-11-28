@@ -243,13 +243,69 @@ class Commonservices extends Controller
 		return($data);
 	}
 
+	public function barChart($var, $container, $disciplinedata, $labels, $tital, $side_title, $top_title)
+	{
+
+		$bar = "
+		<script>
+		var ".$var.";
+		$(function() {
+			".$var." =
+Highcharts.chart('".$container."', {
+    chart: {
+        type: 'column'
+    },
+    credits: {
+        enabled: false
+    },
+    title: {
+        text: '".$top_title."'
+    },
+    xAxis: {
+        categories: [
+            ".$labels."
+        ],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: '".$side_title."'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style=\"font-size:10px\">{point.key}</span><table>',
+        pointFormat: '<tr><td style=\"color:{series.color};padding:0\">{series.name}: </td>' +
+            '<td style=\"padding:0\"><b>{point.y:.1f} mm</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: '".$tital."',
+        data: [".$disciplinedata."]
+
+    }]
+});
+		});
+		</script>
+		";
+		return($bar);
+	}
+
 	public function barChartLine($container, $title, $sub1, $sub2, $name1, $name2, $chart3_bar_data, $chart3_bar_label)
 	{
 		$bar_line = "
 		<script>
-		var chart1; // globally available
+		var chart10; // globally available
 		$(function() {
-			chart1 =
+			chart10 =
 			Highcharts.chart('$container', {
 		    chart: {
 		        zoomType: 'xy'
@@ -372,14 +428,14 @@ class Commonservices extends Controller
 					series: {
 						dataLabels: {
 							enabled: true,
-							format: '{point.name}: {point.y:.1f}%'
+							format: '{point.name}: {point.y:.0f}%'
 						}
 					}
 				},
 
 				tooltip: {
 					headerFormat: '<span style=\"font-size:11px\">{series.name}</span><br>',
-					pointFormat: '<span style=\"color:{point.color}\">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+					pointFormat: '<span style=\"color:{point.color}\">{point.name}</span>: <b>{point.y:.0f}%</b> of total<br/>'
 				},
 				series: [{
 					name: '$label',
@@ -858,11 +914,11 @@ class Commonservices extends Controller
 				}, {
 					from: 120,
 					to: 160,
-					color: '#DDDF0D' // yellow
+					color: '#55BF3B' // yellow
 				}, {
 					from: 160,
 					to: 200,
-					color: '#DF5353' // red
+					color: '#55BF3B' // red
 				}]
 			},
 
@@ -1025,6 +1081,66 @@ class Commonservices extends Controller
             }
         }
         return($data);
+    }
+
+    public function generateDisciplines($projectID, $reviewID)
+    {
+    	$em = $this->em;
+    	$sql = "
+		SELECT
+			`x`.`Discipline`,
+			count(x.Comments) AS 'comments'
+
+		FROM
+			`xml_data` x
+
+		WHERE
+			`x`.`reviewID` = '$reviewID'
+			AND `x`.`projectID` = '$projectID'
+
+		GROUP BY `x`.`Discipline`
+
+		ORDER BY `x`.`Discipline` ASC
+    	";
+        $result = $em->getConnection()->prepare($sql);
+        $result->execute();
+        $data = array();
+        $discipline = "";
+        while ($row = $result->fetch()) {
+        	$discipline = $row['Discipline'];
+        	$data[$discipline] = $row['comments'];
+        }
+        return ($data);
+    }
+
+    public function generateCommentTypes($projectID, $reviewID)
+    {
+    	$em = $this->em;
+    	$sql = "
+		SELECT
+			`x`.`Comment_Type`,
+			count(x.Comments) AS 'comments'
+
+		FROM
+			`xml_data` x
+
+		WHERE
+			`x`.`reviewID` = '$reviewID'
+			AND `x`.`projectID` = '$projectID'
+
+		GROUP BY `x`.`Comment_Type`
+
+		ORDER BY `x`.`Comment_Type` ASC
+    	";
+        $result = $em->getConnection()->prepare($sql);
+        $result->execute();
+        $data = array();
+        $comment_type = "";
+        while ($row = $result->fetch()) {
+        	$comment_type = $row['Comment_Type'];
+        	$data[$comment_type] = $row['comments'];
+        }
+        return ($data);
     }
 
     public function generateStackedData($projectID, $reviewID)

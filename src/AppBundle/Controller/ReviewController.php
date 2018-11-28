@@ -87,9 +87,48 @@ class ReviewController extends Controller
 
         if ($found_data == "1") {
             $found_xml = "1";
+
+            // disciplines
+            $discipline = $this->get('Commonservices')->generateDisciplines($projectID, $reviewID);
+
+            $title = "Test 1";
+            $sub1 = "Test 2";
+            $sub2 = "Test 3";
+            $name1 = "Test 4";
+            $name2 = "Test 5";
+
+            $disciplinedata = "";
+            $labels = "";
+            foreach ($discipline as $key => $value) {
+                $disciplinedata .= "$value,";
+                $labels .= "'$key',";
+            }
+            $disciplinedata = substr($disciplinedata, 0, -1);
+            $labels = substr($labels, 0, -1);
+
+            $discipline_bar = $this->get('Commonservices')->barChart('chart10','discipline', $disciplinedata, $labels, 'Disciplines', 'Number of Comments', 'Comment Distribution');
+            // end disciplines
+
+            // Comment Tyes
+            $comment_type = $this->get('Commonservices')->generateCommentTypes($projectID, $reviewID);
+
+            $commentdata = "";
+            $labels = "";
+            foreach ($comment_type as $key => $value) {
+                $commentdata .= "$value,";
+                $labels .= "'$key',";
+            }
+            $commentdata = substr($commentdata, 0, -1);
+            $labels = substr($labels, 0, -1);
+
+            $comment_bar = $this->get('Commonservices')->barChart('chart11','comment', $commentdata, $labels, 'Comment Types', 'Number of Comments', 'Comment Distribution');
+            // end comment types
+
             $cdata = $this->get('Commonservices')->generateStackedData($projectID, $reviewID);
+            
             $chart_data = $cdata['chart_data'];
             $chart_category = $cdata['chart_category'];
+            
             $stacked_column = $this->get('Commonservices')->stackedColumn('container1', $chart_category, 'Comment Distribution', 'Distribution', $chart_data);
 
             $chart_data = $this->get('Commonservices')->generatePieData($projectID, $reviewID, 'Category');
@@ -116,6 +155,8 @@ class ReviewController extends Controller
             "found_xml" => $found_xml,
             "data" => $data,
             "pdf" => $pdf,
+            'discipline_bar' => $discipline_bar,
+            'comment_bar' => $comment_bar,
         ]);
     }
 
