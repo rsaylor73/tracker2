@@ -85,6 +85,9 @@ class ReviewController extends Controller
         $pie3 = "";
         $pie4 = "";
 
+        $discipline_bar = "";
+        $comment_bar = "";
+
         if ($found_data == "1") {
             $found_xml = "1";
 

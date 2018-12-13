@@ -179,7 +179,7 @@ class DotDashboardController extends Controller
         }
         $total_comments = $pre . $total_comments;
         $total_comments_avg = "0";
-        @$total_comments_avg = floor($total_comments / $total_reviews);
+        @$total_comments_avg = round($total_comments / $total_reviews);
 
         $pre2 = "";
         $len2 = strlen($total_comments_avg);

@@ -12,6 +12,18 @@
     {{comment_bar|raw}}
 
     {% set staff = "0" %}
+    
+    {% set current = "" %}
+
+    {% for role in app.user.roles %}
+        {% if role == "ROLE_ADMIN" %}
+            {% set current = "admin" %}
+        {% elseif role == "ROLE_STAFF" %}
+            {% set current = "staff" %}
+        {% elseif role == "ROLE_LEAD_REVIEWER" %}
+            {% set current = "lead" %}
+        {% endif %} 
+    {% endfor %}
 
     {% for role in app.user.roles %}
         {% if (role == "ROLE_ADMIN") or (role == "ROLE_STAFF") or (role == "ROLE_LEAD_REVIEWER") %}
@@ -59,8 +71,13 @@
             <input type="hidden" name="reviewID" value="{{data.reviewID}}">
             <input type="hidden" name="label" value="Project Phase">
             <select name="project_phase" class="form-control"
-            onblur="update_form(this.form)"
-            onchange="update_form(this.form)">
+            {% if current == "admin" or current == "staff" %}
+                onblur="update_form(this.form)"
+                onchange="update_form(this.form)"
+            {% else %}
+                disabled="disabled"
+            {% endif %}
+            >
             {{SubmittalTypes|raw}}</select>
             </form>
         </div>
@@ -74,8 +91,13 @@
             <input type="hidden" name="reviewID" value="{{data.reviewID}}">
             <input type="hidden" name="label" value="Review Type">
             <select name="review_type" class="form-control"
-            onblur="update_form(this.form)"
-            onchange="update_form(this.form)">
+            {% if current == "admin" or current == "staff" %}
+                onblur="update_form(this.form)"
+                onchange="update_form(this.form)"
+            {% else %}
+                disabled="disabled"
+            {% endif %}
+            >
                 <option selected>{{data.review_type}}</option>
                 <option>Plans</option>
                 <option>Specifications</option>
@@ -135,8 +157,13 @@
             <input type="hidden" name="reviewID" value="{{data.reviewID}}">
             <input type="hidden" name="label" value="Date Completed">
             <input type="text" name="date_completed" value="{{data.date_completed}}" class="form-control date"
-            onblur="update_form(this.form)"
-            onchange="update_form(this.form)">
+            {% if current == "admin" or current == "staff" %}
+                onblur="update_form(this.form)"
+                onchange="update_form(this.form)"
+            {% else %}
+                disabled="disabled"
+            {% endif %}
+            >
             </form>
         </div>
     </div>

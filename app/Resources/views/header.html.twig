@@ -106,9 +106,6 @@
                     {% set view = "1" %}
                 {% endif %}
             {% endfor %}
-            {% if admin_view == "1" %}
-                <li><a href="{{path('contacts')}}">Manage Contacts</a></li>
-            {% endif %}
 
             {% set view = "0" %}
             {% for role in app.user.roles %}
@@ -132,7 +129,8 @@
                 {% endif %}
             </li>
 
-            {% if view == "1" %}
+            {% if admin_view == "1" %}
+                <li><a href="{{path('contacts')}}">Manage Contacts</a></li>
                 <li><a href="{{path('tls_list_users')}}">Manage Users</a></li>
             {% endif %}
             <li><a href="{{path('fos_user_profile_show')}}">Profile</a></li>

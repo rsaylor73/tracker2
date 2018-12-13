@@ -31,12 +31,31 @@ class DefaultController extends Controller
     {   
         $em = $this->getDoctrine()->getManager();
         $session = $this->get('Commonservices')->getsessiondata();
-        $id = $session->get('id'); 
+        $id = $session->get('id');
 
         $userType = $session->get('userType');
         switch ($userType) {
             case "staff":
-                $sql = "SELECT * FROM `dots` ORDER BY `name` ASC";
+                $sql = "SELECT `states` FROM `user` WHERE `id` = '$id'";
+                $result = $em->getConnection()->prepare($sql);
+                $result->execute();
+                $states = "";
+                while ($row = $result->fetch()) {
+                    $states = $row['states'];
+                }
+                if ($states != "") {
+                    $states = unserialize($states);
+                }
+                $states_list = "";
+                if (is_array($states)) {
+                    foreach ($states as $key => $value) {
+                        $states_list .= "'$value',";
+                    }
+                }
+                $states_list = substr($states_list, 0, -1);
+
+
+                $sql = "SELECT * FROM `dots` WHERE `stateID` IN ($states_list) ORDER BY `name` ASC";
                 $result = $em->getConnection()->prepare($sql);
                 $result->execute();
                 $data = array();
